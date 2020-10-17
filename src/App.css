@@ -11,37 +11,9 @@
   background-color: dimgray;
 }
 
-.table {
-  /* box-sizing: border-box; */
-  position: absolute;
-  width: 60%;
-  height: 40%;
-  background-color: darkgreen;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 30%;
-  border: 10px solid darkred;
-}
 
-.cu {
-  position: absolute;
-  width: 20%;
-  height: 30%;
-  background-color: white;
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid red;
-}
 
-.player {
-  position: absolute;
-  width: 20%;
-  height: 30%;
-  background-color: white;
-  top: 85%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid red;
-}
+
+
+
+

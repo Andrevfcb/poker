@@ -1,0 +1,56 @@
+.table {
+    position: absolute;
+    width: 60%;
+    height: 40%;
+    background-color: darkgreen;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30%;
+    border: 10px solid darkred;
+  }
+.table-cards-first {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 7%;
+  }
+  .table-cards-second {
+    position: absolute;
+    top: 50%;
+    left: 27%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 7%;
+  }
+  .table-cards-third {
+    position: absolute;
+    top: 50%;
+    left: 39%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 7%;
+  }
+  .table-cards-fourth {
+    position: absolute;
+    top: 50%;
+    left: 51%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 7%;
+  }
+  .table-cards-fifth {
+    position: absolute;
+    top: 50%;
+    left: 63%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 7%;
+  }

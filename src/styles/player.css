@@ -1,0 +1,16 @@
+.player {
+    position: absolute;
+    width: 20%;
+    height: 30%;
+    background-color: white;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid red;
+  }
+  
+  .player-cards img {
+    width: 100px;
+    height: 100px;
+    border-radius: 7%;
+  }

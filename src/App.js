@@ -1,19 +1,23 @@
 import React, {Component} from 'react';
 import './App.css';
+import Player from './Player'
+import CU from './CU'
+import Table from './Table'
 
+import twoH from './cards/2H.jpg'
 
 class App extends Component {
   state = {
     cards: [
-      {id: 0, number: 2}
+      {id: 0, number: 2, img: twoH, active: true}
     ]
   }
   render() { 
     return ( 
     <div className="game_area">
-      <div className="cu"></div>
-      <div className="table"></div>
-      <div className="player"></div>
+      <CU cards={this.state.cards}/>
+      <Table cards={this.state.cards} />
+      <Player cards={this.state.cards}/>
     </div>
    );
   }
