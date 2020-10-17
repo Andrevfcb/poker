@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
+
+class App extends Component {
+  state = {
+    cards: [
+      {id: 0, number: 2}
+    ]
+  }
+  render() { 
+    return ( 
     <div className="game_area">
       <div className="cu"></div>
       <div className="table"></div>
       <div className="player"></div>
     </div>
-  );
+   );
+  }
 }
-
+ 
 export default App;
