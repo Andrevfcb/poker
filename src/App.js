@@ -69,24 +69,24 @@ class App extends Component {
     ],
     playerHand:
     [
-      {number: 7},
-      {number: 8}
+      {number: 9, color: "heart"},
+      {number: 2, color: "heart"}
     ],
     AIHand:
     [
-      {number: 2},
-      {number: 3}
+      {number: 2, color: "heart"},
+      {number: 3, color: "heart"}
     ],
     tableHand:
     [
-      {number: 2},
-      {number: 3},
-      {number: 4},
-      {number: 5},
-      {number: 6}
+      {number: 10, color: "heart"},
+      {number: 2, color: "heart"},
+      {number: 4, color: "heart"},
+      {number: 4, color: "heart"},
+      {number: 4, color: "heart"}
     ],
-    // playerOptions:
-    // {
+    playerOptions:
+    {
       royalFlush: false,
       straightFlush: false,
       fourOfKind: false,
@@ -97,13 +97,125 @@ class App extends Component {
       twoPairs: false,
       onePair: false,
       hightCard: false
-    // }
+    }
   }
+
+
+  // componentDidUpdate(prevState) {
+  //   // Typowy sposób użycia (nie zapomnij porównać właściwości):
+  //   if (this.state.playerOptions !== prevState.playerOptions) {
+  //     this.checkIfPair()}
+  // }
+  
 
   compareNumbers(a, b) {
     return a - b
-  } 
+  }
+  compareNumbersInObject(a, b) {
+    return a.number - b.number
+  }
   
+  checkState = () => {
+    console.log(this.state.playerOptions);
+  }
+
+  checkPlayerOptions = () => {
+    this.checkIfPair()
+    this.checkIfTwoPairs()
+    this.checkIfThree()
+    this.checkIfStreigh()
+    this.checkIfFlush()
+    this.checkIfFullHouse()
+    this.checkIfFour()
+    this.checkIfStraightFlush()
+    this.checkIfRoyalFlush()
+  }
+  
+  checkIfPair = () => {
+    this.checkIfFullHouse()
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: prevState.playerOptions.fourOfKind,
+          fullHouse: prevState.playerOptions.fullHouse,
+          flush: prevState.playerOptions.flush,
+          streigh: prevState.playerOptions.streigh,
+          threeOfAKind: prevState.playerOptions.threeOfAKind,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: true,
+          hightCard: prevState.playerOptions.hightCard
+        }}))}
+    })
+  }
+
+  checkIfTwoPairs = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+    let pairs = 0
+    let onePair
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1] && hand !== onePair) {pairs++; onePair = hand;}
+    })
+    if (pairs >= 2) {this.setState(prevState => ({playerOptions:
+      {
+        royalFlush: prevState.playerOptions.royalFlush,
+        straightFlush: prevState.playerOptions.straightFlush,
+        fourOfKind: prevState.playerOptions.fourOfKind,
+        fullHouse: prevState.playerOptions.fullHouse,
+        flush: prevState.playerOptions.flush,
+        streigh: prevState.playerOptions.streigh,
+        threeOfAKind: prevState.playerOptions.threeOfAKind,
+        twoPairs: true,
+        onePair: prevState.playerOptions.onePair,
+        hightCard: prevState.playerOptions.hightCard
+      }}))}
+  }
+
+  checkIfThree = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: prevState.playerOptions.fourOfKind,
+          fullHouse: prevState.playerOptions.fullHouse,
+          flush: prevState.playerOptions.flush,
+          streigh: prevState.playerOptions.streigh,
+          threeOfAKind: true,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: prevState.playerOptions.onePair,
+          hightCard: prevState.playerOptions.hightCard
+        }}))}
+    })
+  }
+
   checkIfStreigh = () => {
     const tableHand = [...this.state.tableHand]
     const playerHand = [...this.state.playerHand]
@@ -114,7 +226,7 @@ class App extends Component {
       tableAndPlayerHand.push(hand.number)
     })
     tableAndPlayerHand.sort(this.compareNumbers)
-    
+        
 
     tableAndPlayerHand.forEach((hand, id) => {
       if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2] && hand == tableAndPlayerHand[id + 3]) {
@@ -125,28 +237,328 @@ class App extends Component {
         tableAndPlayerHand.splice(id, 1)}
     })
     if (tableAndPlayerHand.length >= 5) {
-      if (tableAndPlayerHand[6] - 4 == tableAndPlayerHand[2]) {
-        this.setState({
-            streigh: true
-        })
-      } else if (tableAndPlayerHand[5] - 4 == tableAndPlayerHand[1]) {
-        this.setState({
-          streigh: true
-      })
-      } else if (tableAndPlayerHand[4] - 4 == tableAndPlayerHand[0]) {
-        this.setState({
-          streigh: true
-      })
+      if (tableAndPlayerHand[6] - 4 == tableAndPlayerHand[2]) {this.setState(prevState => ({playerOptions:
+          {
+            royalFlush: prevState.playerOptions.royalFlush,
+            straightFlush: prevState.playerOptions.straightFlush,
+            fourOfKind: prevState.playerOptions.fourOfKind,
+            fullHouse: prevState.playerOptions.fullHouse,
+            flush: prevState.playerOptions.flush,
+            streigh: true,
+            threeOfAKind: prevState.playerOptions.threeOfAKind,
+            twoPairs: prevState.playerOptions.twoPairs,
+            onePair: prevState.playerOptions.onePair,
+            hightCard: prevState.playerOptions.hightCard
+          }}))
+      } else if (tableAndPlayerHand[5] - 4 == tableAndPlayerHand[1]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: prevState.playerOptions.fourOfKind,
+          fullHouse: prevState.playerOptions.fullHouse,
+          flush: prevState.playerOptions.flush,
+          streigh: true,
+          threeOfAKind: prevState.playerOptions.threeOfAKind,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: prevState.playerOptions.onePair,
+          hightCard: prevState.playerOptions.hightCard
+        }}))
+      } else if (tableAndPlayerHand[4] - 4 == tableAndPlayerHand[0]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: prevState.playerOptions.fourOfKind,
+          fullHouse: prevState.playerOptions.fullHouse,
+          flush: prevState.playerOptions.flush,
+          streigh: true,
+          threeOfAKind: prevState.playerOptions.threeOfAKind,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: prevState.playerOptions.onePair,
+          hightCard: prevState.playerOptions.hightCard
+        }}))}
+    }
+  }
+
+  checkIfFlush = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.color)
+    })
+    let hearts = 0
+    let clubs = 0
+    let diamonds = 0
+    let spades = 0
+    tableAndPlayerHand.forEach(hand => {
+      if (hand === 'heart') {hearts++}
+      else if (hand === 'diamond') {diamonds++}
+      else if (hand === 'club') {clubs++}
+      else {spades++}
+    })
+
+    if (hearts >=5 || diamonds >=5 || clubs >=5 || spades >=5) {this.setState(prevState => ({playerOptions:
+      {
+        royalFlush: prevState.playerOptions.royalFlush,
+        straightFlush: prevState.playerOptions.straightFlush,
+        fourOfKind: prevState.playerOptions.fourOfKind,
+        fullHouse: prevState.playerOptions.fullHouse,
+        flush: true,
+        streigh: prevState.playerOptions.streigh,
+        threeOfAKind: prevState.playerOptions.threeOfAKind,
+        twoPairs: prevState.playerOptions.twoPairs,
+        onePair: prevState.playerOptions.onePair,
+        hightCard: prevState.playerOptions.hightCard
+      }}))
+  }
+  }
+
+  checkIfFullHouse = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2]) {tableAndPlayerHand.splice(id, 3)}
+    })
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: prevState.playerOptions.fourOfKind,
+          fullHouse: true,
+          flush: prevState.playerOptions.flush,
+          streigh: prevState.playerOptions.streigh,
+          threeOfAKind: prevState.playerOptions.threeOfAKind,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: prevState.playerOptions.onePair,
+          hightCard: prevState.playerOptions.hightCard
+        }}))}
+    })
+  }
+
+  checkIfStraightFlush = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand)
+    })
+    tableAndPlayerHand.sort(this.compareNumbersInObject)
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (id <= (tableAndPlayerHand.length - 4) && hand.number == tableAndPlayerHand[id + 1].number && hand.number == tableAndPlayerHand[id + 2].number && hand.number == tableAndPlayerHand[id + 3].number) {
+        tableAndPlayerHand.splice(id, 3)
+      } else if (id <= (tableAndPlayerHand.length - 3) && hand.number == tableAndPlayerHand[id + 1].number && hand.number == tableAndPlayerHand[id + 2].number) {
+        tableAndPlayerHand.splice(id, 2)
+      } else if (id <= (tableAndPlayerHand.length - 2) && hand.number == tableAndPlayerHand[id + 1].number) {
+        tableAndPlayerHand.splice(id, 1)}
+    })
+    let hearts = 0
+    let clubs = 0
+    let diamonds = 0
+    let spades = 0
+    if (tableAndPlayerHand.length >= 5) {
+      if (tableAndPlayerHand.length == 7 && tableAndPlayerHand[6].number - 4 == tableAndPlayerHand[2].number) {
+          for (let i=2; i<tableAndPlayerHand.length; i++) {
+            if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+            else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+            else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+            else {spades++}
+            }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: prevState.playerOptions.royalFlush,
+              straightFlush: true,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
+      } else if (tableAndPlayerHand.length >= 6 && tableAndPlayerHand[5].number - 4 == tableAndPlayerHand[1].number) {
+        for (let i=1; i<6; i++) {
+          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+          else {spades++}
+          }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: prevState.playerOptions.royalFlush,
+              straightFlush: true,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
+      } else if (tableAndPlayerHand.length >= 5 && tableAndPlayerHand[4].number - 4 == tableAndPlayerHand[0].number) {
+        for (let i=0; i<5; i++) {
+          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+          else {spades++}
+          }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: prevState.playerOptions.royalFlush,
+              straightFlush: true,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
       }
-    } else return console.log('za mało');
+      }
+  }
+  
+  checkIfFour = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2] && hand == tableAndPlayerHand[id + 3]) {this.setState(prevState => ({playerOptions:
+        {
+          royalFlush: prevState.playerOptions.royalFlush,
+          straightFlush: prevState.playerOptions.straightFlush,
+          fourOfKind: true,
+          fullHouse: prevState.playerOptions.fullHouse,
+          flush: prevState.playerOptions.flush,
+          streigh: prevState.playerOptions.streigh,
+          threeOfAKind: prevState.playerOptions.threeOfAKind,
+          twoPairs: prevState.playerOptions.twoPairs,
+          onePair: prevState.playerOptions.onePair,
+          hightCard: prevState.playerOptions.hightCard
+        }}))
+    }
+    })
+  }
+
+  checkIfRoyalFlush = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand)
+    })
+    tableAndPlayerHand.sort(this.compareNumbersInObject)   
+    tableAndPlayerHand.forEach((hand, id) => {
+      if (id <= (tableAndPlayerHand.length - 4) && hand.number == tableAndPlayerHand[id + 1].number && hand.number == tableAndPlayerHand[id + 2].number && hand.number == tableAndPlayerHand[id + 3].number) {
+        tableAndPlayerHand.splice(id, 3)
+      } else if (id <= (tableAndPlayerHand.length - 3) && hand.number == tableAndPlayerHand[id + 1].number && hand.number == tableAndPlayerHand[id + 2].number) {
+        tableAndPlayerHand.splice(id, 2)
+      } else if (id <= (tableAndPlayerHand.length - 2) && hand.number == tableAndPlayerHand[id + 1].number) {
+        tableAndPlayerHand.splice(id, 1)}
+    })
+    let hearts = 0
+    let clubs = 0
+    let diamonds = 0
+    let spades = 0
+    if (tableAndPlayerHand.length >= 5) {
+      if (tableAndPlayerHand.length == 7 && tableAndPlayerHand[6].number - 4 == tableAndPlayerHand[2].number && tableAndPlayerHand[6].number == 14) {
+          for (let i=2; i<tableAndPlayerHand.length; i++) {
+            if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+            else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+            else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+            else {spades++}
+            }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: true,
+              straightFlush: prevState.playerOptions.straightFlush,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
+      } else if (tableAndPlayerHand.length >= 6 && tableAndPlayerHand[5].number - 4 == tableAndPlayerHand[1].number && tableAndPlayerHand[5].number == 14) {
+        for (let i=1; i<6; i++) {
+          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+          else {spades++}
+          }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: true,
+              straightFlush: prevState.playerOptions.straightFlush,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
+      } else if (tableAndPlayerHand.length >= 5 && tableAndPlayerHand[4].number - 4 == tableAndPlayerHand[0].number && tableAndPlayerHand[4].number == 14) {
+        for (let i=0; i<5; i++) {
+          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
+          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
+          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
+          else {spades++}
+          }
+          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            {
+              royalFlush: true,
+              straightFlush: prevState.playerOptions.straightFlush,
+              fourOfKind: prevState.playerOptions.fourOfKind,
+              fullHouse: prevState.playerOptions.fullHouse,
+              flush: prevState.playerOptions.flush,
+              streigh: prevState.playerOptions.streigh,
+              threeOfAKind: prevState.playerOptions.threeOfAKind,
+              twoPairs: prevState.playerOptions.twoPairs,
+              onePair: prevState.playerOptions.onePair,
+              hightCard: prevState.playerOptions.hightCard
+            }}))
+        }
+      }
+    }
   }
 
   render() { 
     return ( 
     <div className="game_area">
-      <button onClick={this.checkIfStreigh}>SPRAWDŹ</button>
-      <button onClick={() => {console.log(this.state.streigh);
-      }}>SPRAWDŹ2</button>
+      <button onClick={this.checkPlayerOptions}>SPRAWDŹ</button>
+      <button onClick={this.checkState}>SPRAWDŹ3</button>
+      <button onClick={this.checkIfFullHouse}>SPRAWDŹ2</button>
       <CU cards={this.state.cards}/>
       <Table cards={this.state.cards} />
       <Player cards={this.state.cards}/>
