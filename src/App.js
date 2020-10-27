@@ -62,29 +62,64 @@ class App extends Component {
   state = {
     cards: [
       {id: 0, number: 2, img: twoH, active: true},
-      {id: 1, number: 5, img: fiveS, active: true},
-      {id: 2, number: "asC", img: aC, active: true},
-      {id: 3, number: "queenD", img: qD, active: true},
-      {id: 4, number: 10, img: tenD, active: true},
+      {id: 1, number: 2, img: twoC, active: true},
+      {id: 2, number: 2, img: twoD, active: true},
+      {id: 3, number: 2, img: twoS, active: true},
+      {id: 4, number: 3, img: threeH, active: true},
+      {id: 5, number: 3, img: threeC, active: true},
+      {id: 6, number: 3, img: threeD, active: true},
+      {id: 7, number: 3, img: threeS, active: true},
+      {id: 8, number: 4, img: fourH, active: true},
+      {id: 9, number: 4, img: fourC, active: true},
+      {id: 10, number: 4, img: fourD, active: true},
+      {id: 11, number: 4, img: fourS, active: true},
+      {id: 12, number: 5, img: fiveH, active: true},
+      {id: 13, number: 5, img: fiveC, active: true},
+      {id: 14, number: 5, img: fiveD, active: true},
+      {id: 15, number: 5, img: fiveS, active: true},
+      {id: 16, number: 6, img: sixH, active: true},
+      {id: 17, number: 6, img: sixC, active: true},
+      {id: 18, number: 6, img: sixD, active: true},
+      {id: 19, number: 6, img: sixS, active: true},
+      {id: 20, number: 7, img: sevenH, active: true},
+      {id: 21, number: 7, img: sevenC, active: true},
+      {id: 22, number: 7, img: sevenD, active: true},
+      {id: 23, number: 7, img: sevenS, active: true},
+      {id: 24, number: 8, img: eightH, active: true},
+      {id: 25, number: 8, img: eightC, active: true},
+      {id: 26, number: 8, img: eightD, active: true},
+      {id: 27, number: 8, img: eightS, active: true},
+      {id: 28, number: 9, img: nineH, active: true},
+      {id: 29, number: 9, img: nineC, active: true},
+      {id: 30, number: 9, img: nineD, active: true},
+      {id: 31, number: 9, img: nineS, active: true},
+      {id: 32, number: 10, img: tenH, active: true},
+      {id: 33, number: 10, img: tenC, active: true},
+      {id: 34, number: 10, img: tenD, active: true},
+      {id: 35, number: 10, img: tenS, active: true},
+      {id: 36, number: 11, img: jH, active: true},
+      {id: 37, number: 11, img: jC, active: true},
+      {id: 38, number: 11, img: jD, active: true},
+      {id: 39, number: 11, img: jS, active: true},
+      {id: 40, number: 12, img: qH, active: true},
+      {id: 41, number: 12, img: qC, active: true},
+      {id: 42, number: 12, img: qD, active: true},
+      {id: 43, number: 12, img: qS, active: true},
+      {id: 44, number: 13, img: kH, active: true},
+      {id: 45, number: 13, img: kC, active: true},
+      {id: 46, number: 13, img: kD, active: true},
+      {id: 47, number: 13, img: kS, active: true},
+      {id: 48, number: 14, img: aH, active: true},
+      {id: 49, number: 14, img: aC, active: true},
+      {id: 50, number: 14, img: aD, active: true},
+      {id: 51, number: 14, img: aS, active: true},
     ],
     playerHand:
-    [
-      {number: 2, color: "heart"},
-      {number: 2, color: "heart"}
-    ],
+    [],
     AIHand:
-    [
-      {number: 6, color: "heart"},
-      {number: 6, color: "heart"}
-    ],
+    [],
     tableHand:
-    [
-      {number: 10, color: "heart"},
-      {number: 2, color: "heart"},
-      {number: 5, color: "heart"},
-      {number: 5, color: "heart"},
-      {number: 6, color: "heart"}
-    ],
+    [],
     playerOptions:
     {
       royalFlush: false,
@@ -967,15 +1002,100 @@ class App extends Component {
     }
   }
 
+  getPlayersCards = () => {
+    const cards = this.state.cards
+    const playerHand = this.state.playerHand
+    if (playerHand.length == 2) {
+      cards.push(this.state.playerHand[0])
+      cards.push(this.state.playerHand[1])
+      playerHand.splice(0,2)
+    }
+    const getRandomOne = Math.floor(Math.random()*cards.length)
+    playerHand.push(cards[getRandomOne])
+    cards.splice(getRandomOne, 1)
+    const getRandomTwo = Math.floor(Math.random()*cards.length)
+    playerHand.push(cards[getRandomTwo])
+    cards.splice(getRandomTwo, 1)
+    this.setState({
+      cards,
+      playerHand
+    })
+  }
+
+  getAICards = () => {
+    const cards = this.state.cards
+    const AIHand = this.state.AIHand
+    if (AIHand.length == 2) {
+      cards.push(this.state.AIHand[0])
+      cards.push(this.state.AIHand[1])
+      AIHand.splice(0,2)
+    }
+    const getRandomOne = Math.floor(Math.random()*cards.length)
+    AIHand.push(cards[getRandomOne])
+    cards.splice(getRandomOne, 1)
+    const getRandomTwo = Math.floor(Math.random()*cards.length)
+    AIHand.push(cards[getRandomTwo])
+    cards.splice(getRandomTwo, 1)
+    this.setState({
+      cards,
+      AIHand
+    })
+  }
+
+  getTableCards = () => {
+    const cards = this.state.cards
+    const tableHand = this.state.tableHand
+    if (tableHand.length == 0) {
+    const getRandomOne = Math.floor(Math.random()*cards.length)
+    tableHand.push(cards[getRandomOne])
+    cards.splice(getRandomOne, 1)
+    const getRandomTwo = Math.floor(Math.random()*cards.length)
+    tableHand.push(cards[getRandomTwo])
+    cards.splice(getRandomTwo, 1)
+    const getRandomThree = Math.floor(Math.random()*cards.length)
+    tableHand.push(cards[getRandomThree])
+    cards.splice(getRandomThree, 1)
+    this.setState({
+      cards,
+      tableHand
+    })
+    } else if (tableHand.length == 3) {
+      const getRandomFour = Math.floor(Math.random()*cards.length)
+      tableHand.push(cards[getRandomFour])
+      cards.splice(getRandomFour, 1)
+      this.setState({
+        cards,
+        tableHand
+      })
+      } else if (tableHand.length == 4) {
+        const getRandomFive = Math.floor(Math.random()*cards.length)
+        tableHand.push(cards[getRandomFive])
+        cards.splice(getRandomFive, 1)
+        this.setState({
+          cards,
+          tableHand
+        })
+        } else if (tableHand.length == 5) {
+          tableHand.forEach(hand => {
+            cards.push(hand)
+          })
+          tableHand.splice(0, 5)
+          this.setState({
+            cards,
+            tableHand
+          })
+          }
+  }
+
   render() { 
     return ( 
     <div className="game_area">
-      <button onClick={this.checkPlayerOptions}>SPRAWDŹ</button>
-      <button onClick={this.checkState}>SPRAWDŹ3</button>
-      <button onClick={this.checkIfFullHouse}>SPRAWDŹ2</button>
-      <CU cards={this.state.cards}/>
-      <Table cards={this.state.cards} />
-      <Player cards={this.state.cards}/>
+      <button onClick={this.getPlayersCards}>SPRAWDŹ</button>
+      <button onClick={this.getTableCards}>SPRAWDŹ3</button>
+      <button onClick={this.getAICards}>SPRAWDŹ2</button>
+      <CU cards={this.state.AIHand}/>
+      <Table cards={this.state.tableHand} />
+      <Player cards={this.state.playerHand}/>
     </div>
    );
   }
