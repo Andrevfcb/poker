@@ -61,58 +61,58 @@ import aS from './cards/AS.jpg'
 class App extends Component {
   state = {
     cards: [
-      {id: 0, number: 2, img: twoH, active: true},
-      {id: 1, number: 2, img: twoC, active: true},
-      {id: 2, number: 2, img: twoD, active: true},
-      {id: 3, number: 2, img: twoS, active: true},
-      {id: 4, number: 3, img: threeH, active: true},
-      {id: 5, number: 3, img: threeC, active: true},
-      {id: 6, number: 3, img: threeD, active: true},
-      {id: 7, number: 3, img: threeS, active: true},
-      {id: 8, number: 4, img: fourH, active: true},
-      {id: 9, number: 4, img: fourC, active: true},
-      {id: 10, number: 4, img: fourD, active: true},
-      {id: 11, number: 4, img: fourS, active: true},
-      {id: 12, number: 5, img: fiveH, active: true},
-      {id: 13, number: 5, img: fiveC, active: true},
-      {id: 14, number: 5, img: fiveD, active: true},
-      {id: 15, number: 5, img: fiveS, active: true},
-      {id: 16, number: 6, img: sixH, active: true},
-      {id: 17, number: 6, img: sixC, active: true},
-      {id: 18, number: 6, img: sixD, active: true},
-      {id: 19, number: 6, img: sixS, active: true},
-      {id: 20, number: 7, img: sevenH, active: true},
-      {id: 21, number: 7, img: sevenC, active: true},
-      {id: 22, number: 7, img: sevenD, active: true},
-      {id: 23, number: 7, img: sevenS, active: true},
-      {id: 24, number: 8, img: eightH, active: true},
-      {id: 25, number: 8, img: eightC, active: true},
-      {id: 26, number: 8, img: eightD, active: true},
-      {id: 27, number: 8, img: eightS, active: true},
-      {id: 28, number: 9, img: nineH, active: true},
-      {id: 29, number: 9, img: nineC, active: true},
-      {id: 30, number: 9, img: nineD, active: true},
-      {id: 31, number: 9, img: nineS, active: true},
-      {id: 32, number: 10, img: tenH, active: true},
-      {id: 33, number: 10, img: tenC, active: true},
-      {id: 34, number: 10, img: tenD, active: true},
-      {id: 35, number: 10, img: tenS, active: true},
-      {id: 36, number: 11, img: jH, active: true},
-      {id: 37, number: 11, img: jC, active: true},
-      {id: 38, number: 11, img: jD, active: true},
-      {id: 39, number: 11, img: jS, active: true},
-      {id: 40, number: 12, img: qH, active: true},
-      {id: 41, number: 12, img: qC, active: true},
-      {id: 42, number: 12, img: qD, active: true},
-      {id: 43, number: 12, img: qS, active: true},
-      {id: 44, number: 13, img: kH, active: true},
-      {id: 45, number: 13, img: kC, active: true},
-      {id: 46, number: 13, img: kD, active: true},
-      {id: 47, number: 13, img: kS, active: true},
-      {id: 48, number: 14, img: aH, active: true},
-      {id: 49, number: 14, img: aC, active: true},
-      {id: 50, number: 14, img: aD, active: true},
-      {id: 51, number: 14, img: aS, active: true},
+      {id: 0, number: 2, color: 'heart', img: twoH, active: true},
+      {id: 1, number: 2, color: 'club', img: twoC, active: true},
+      {id: 2, number: 2, color: 'diamond', img: twoD, active: true},
+      {id: 3, number: 2, color: 'spade', img: twoS, active: true},
+      {id: 4, number: 3, color: 'heart', img: threeH, active: true},
+      {id: 5, number: 3, color: 'club', img: threeC, active: true},
+      {id: 6, number: 3, color: 'diamond', img: threeD, active: true},
+      {id: 7, number: 3, color: 'spade', img: threeS, active: true},
+      {id: 8, number: 4, color: 'heart', img: fourH, active: true},
+      {id: 9, number: 4, color: 'club', img: fourC, active: true},
+      {id: 10, number: 4, color: 'diamond', img: fourD, active: true},
+      {id: 11, number: 4, color: 'spade', img: fourS, active: true},
+      {id: 12, number: 5, color: 'heart', img: fiveH, active: true},
+      {id: 13, number: 5, color: 'club', img: fiveC, active: true},
+      {id: 14, number: 5, color: 'diamond', img: fiveD, active: true},
+      {id: 15, number: 5, color: 'spade', img: fiveS, active: true},
+      {id: 16, number: 6, color: 'heart', img: sixH, active: true},
+      {id: 17, number: 6, color: 'club', img: sixC, active: true},
+      {id: 18, number: 6, color: 'diamond', img: sixD, active: true},
+      {id: 19, number: 6, color: 'spade', img: sixS, active: true},
+      {id: 20, number: 7, color: 'heart', img: sevenH, active: true},
+      {id: 21, number: 7, color: 'club', img: sevenC, active: true},
+      {id: 22, number: 7, color: 'diamond', img: sevenD, active: true},
+      {id: 23, number: 7, color: 'spade', img: sevenS, active: true},
+      {id: 24, number: 8, color: 'heart', img: eightH, active: true},
+      {id: 25, number: 8, color: 'club', img: eightC, active: true},
+      {id: 26, number: 8, color: 'diamond', img: eightD, active: true},
+      {id: 27, number: 8, color: 'spade', img: eightS, active: true},
+      {id: 28, number: 9, color: 'heart', img: nineH, active: true},
+      {id: 29, number: 9, color: 'club', img: nineC, active: true},
+      {id: 30, number: 9, color: 'diamond', img: nineD, active: true},
+      {id: 31, number: 9, color: 'spade', img: nineS, active: true},
+      {id: 32, number: 10, color: 'heart', img: tenH, active: true},
+      {id: 33, number: 10, color: 'club', img: tenC, active: true},
+      {id: 34, number: 10, color: 'diamond', img: tenD, active: true},
+      {id: 35, number: 10, color: 'spade', img: tenS, active: true},
+      {id: 36, number: 11, color: 'heart', img: jH, active: true},
+      {id: 37, number: 11, color: 'club', img: jC, active: true},
+      {id: 38, number: 11, color: 'diamond', img: jD, active: true},
+      {id: 39, number: 11, color: 'spade', img: jS, active: true},
+      {id: 40, number: 12, color: 'heart', img: qH, active: true},
+      {id: 41, number: 12, color: 'club', img: qC, active: true},
+      {id: 42, number: 12, color: 'diamond', img: qD, active: true},
+      {id: 43, number: 12, color: 'spade', img: qS, active: true},
+      {id: 44, number: 13, color: 'heart', img: kH, active: true},
+      {id: 45, number: 13, color: 'club', img: kC, active: true},
+      {id: 46, number: 13, color: 'diamond', img: kD, active: true},
+      {id: 47, number: 13, color: 'spade', img: kS, active: true},
+      {id: 48, number: 14, color: 'heart', img: aH, active: true},
+      {id: 49, number: 14, color: 'club', img: aC, active: true},
+      {id: 50, number: 14, color: 'diamond', img: aD, active: true},
+      {id: 51, number: 14, color: 'spade', img: aS, active: true},
     ],
     playerHand:
     [],
@@ -131,7 +131,7 @@ class App extends Component {
       threeOfAKind: false,
       twoPairs: false,
       onePair: false,
-      hightCard: false
+      hightCard: true
     },
     CUOptions:
     {
@@ -144,8 +144,10 @@ class App extends Component {
       threeOfAKind: false,
       twoPairs: false,
       onePair: false,
-      hightCard: false
-    }
+      hightCard: true
+    },
+    highPCard: 0,
+    highCCard: 0
   }
 
 
@@ -166,9 +168,11 @@ class App extends Component {
   checkState = () => {
     console.log(this.state.playerOptions);
     console.log(this.state.CUOptions);
+    console.log(this.state.highPCard);
+    console.log(this.state.highCCard);
   }
 
-  checkPlayerOptions = () => {
+  checkOptions = () => {
     this.checkIfPair()
     this.checkIfTwoPairs()
     this.checkIfThree()
@@ -203,8 +207,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: true,
           hightCard: prevState.playerOptions.hightCard
-        }}))}
-    })
+        },
+        highPCard: hand}))}})
     const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
     tableCUHand.push(AIHand[0])
@@ -227,7 +231,8 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: true,
           hightCard: prevState.CUOptions.hightCard
-        }}))}
+        },
+        highCCard: hand}))}
     })
   }
 
@@ -258,7 +263,8 @@ class App extends Component {
         twoPairs: true,
         onePair: prevState.playerOptions.onePair,
         hightCard: prevState.playerOptions.hightCard
-      }}))}
+      },
+      highPCard: onePair}))}
 
     const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
@@ -286,7 +292,8 @@ class App extends Component {
         twoPairs: true,
         onePair: prevState.CUOptions.onePair,
         hightCard: prevState.CUOptions.hightCard
-      }}))}
+      },
+      highCCard: CUonePair}))}
   }
 
   checkIfThree = () => {
@@ -312,7 +319,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: prevState.playerOptions.onePair,
           hightCard: prevState.playerOptions.hightCard
-        }}))}})
+        },
+        highPCard: hand}))}})
 
     const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
@@ -336,7 +344,8 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: prevState.CUOptions.onePair,
           hightCard: prevState.CUOptions.hightCard
-        }}))}})
+        },
+        highCCard: hand}))}})
   }
 
   checkIfStreigh = () => {
@@ -350,7 +359,6 @@ class App extends Component {
     })
     tableAndPlayerHand.sort(this.compareNumbers)
         
-
     tableAndPlayerHand.forEach((hand, id) => {
       if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2] && hand == tableAndPlayerHand[id + 3]) {
         tableAndPlayerHand.splice(id, 3)
@@ -372,7 +380,8 @@ class App extends Component {
             twoPairs: prevState.playerOptions.twoPairs,
             onePair: prevState.playerOptions.onePair,
             hightCard: prevState.playerOptions.hightCard
-          }}))
+          },
+          highPCard: tableAndPlayerHand[6]}))
       } else if (tableAndPlayerHand[5] - 4 == tableAndPlayerHand[1]) {this.setState(prevState => ({playerOptions:
         {
           royalFlush: prevState.playerOptions.royalFlush,
@@ -385,7 +394,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: prevState.playerOptions.onePair,
           hightCard: prevState.playerOptions.hightCard
-        }}))
+        },
+        highPCard: tableAndPlayerHand[5]}))
       } else if (tableAndPlayerHand[4] - 4 == tableAndPlayerHand[0]) {this.setState(prevState => ({playerOptions:
         {
           royalFlush: prevState.playerOptions.royalFlush,
@@ -398,7 +408,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: prevState.playerOptions.onePair,
           hightCard: prevState.playerOptions.hightCard
-        }}))}
+        },
+        highPCard: tableAndPlayerHand[4]}))}
     }
 
     const tableCUHand = [...this.state.tableHand]
@@ -431,7 +442,8 @@ class App extends Component {
             twoPairs: prevState.CUOptions.twoPairs,
             onePair: prevState.CUOptions.onePair,
             hightCard: prevState.CUOptions.hightCard
-          }}))
+          },
+          highCCard: tableAndCUHand[6]}))
       } else if (tableAndCUHand[5] - 4 == tableAndCUHand[1]) {this.setState(prevState => ({CUOptions:
         {
           royalFlush: prevState.CUOptions.royalFlush,
@@ -444,7 +456,8 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: prevState.CUOptions.onePair,
           hightCard: prevState.CUOptions.hightCard
-        }}))
+        },
+        highCCard: tableAndCUHand[5]}))
       } else if (tableAndCUHand[4] - 4 == tableAndCUHand[0]) {this.setState(prevState => ({CUOptions:
         {
           royalFlush: prevState.CUOptions.royalFlush,
@@ -457,7 +470,8 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: prevState.CUOptions.onePair,
           hightCard: prevState.CUOptions.hightCard
-        }}))}
+        },
+        highCCard: tableAndCUHand[4]}))}
     }
   }
 
@@ -468,19 +482,20 @@ class App extends Component {
     tableHand.push(playerHand[1])
     const tableAndPlayerHand = []
     tableHand.forEach(hand => {
-      tableAndPlayerHand.push(hand.color)
+      tableAndPlayerHand.push(hand)
     })
+    tableAndPlayerHand.sort(this.compareNumbersInObject)
     let hearts = 0
     let clubs = 0
     let diamonds = 0
     let spades = 0
     tableAndPlayerHand.forEach(hand => {
-      if (hand === 'heart') {hearts++}
-      else if (hand === 'diamond') {diamonds++}
-      else if (hand === 'club') {clubs++}
+      if (hand.color === 'heart') {hearts++}
+      else if (hand.color === 'diamond') {diamonds++}
+      else if (hand.color === 'club') {clubs++}
       else {spades++}
     })
-
+    let tableAndPlayerHandFilter
     if (hearts >=5 || diamonds >=5 || clubs >=5 || spades >=5) {this.setState(prevState => ({playerOptions:
       {
         royalFlush: prevState.playerOptions.royalFlush,
@@ -494,7 +509,15 @@ class App extends Component {
         onePair: prevState.playerOptions.onePair,
         hightCard: prevState.playerOptions.hightCard
       }}))
+      if (hearts >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'heart')
+      } else if (clubs >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'club')
+      } else if (diamonds >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'diamond')
+      } else if (spades >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'spade')}
+      if (hearts ==7 || diamonds ==7 || clubs ==7 || spades ==7) {this.setState({highPCard: tableAndPlayerHandFilter[6].number})}
+      else if (hearts ==6 || diamonds ==6 || clubs ==6 || spades ==6) {this.setState({highPCard: tableAndPlayerHandFilter[5].number})}
+      else if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState({highPCard: tableAndPlayerHandFilter[4].number})}
   }
+  
 
   const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
@@ -502,18 +525,20 @@ class App extends Component {
     tableCUHand.push(AIHand[1])
     const tableAndCUHand = []
     tableCUHand.forEach(hand => {
-      tableAndCUHand.push(hand.number)
+      tableAndCUHand.push(hand)
     })
+    tableAndCUHand.sort(this.compareNumbersInObject)
     let Chearts = 0
     let Cclubs = 0
     let Cdiamonds = 0
     let Cspades = 0
     tableAndCUHand.forEach(hand => {
-      if (hand === 'heart') {Chearts++}
-      else if (hand === 'diamond') {Cdiamonds++}
-      else if (hand === 'club') {Cclubs++}
+      if (hand.color === 'heart') {Chearts++}
+      else if (hand.color === 'diamond') {Cdiamonds++}
+      else if (hand.color === 'club') {Cclubs++}
       else {Cspades++}
     })
+    let tableAndCUHandFilter
     if (Chearts >=5 || Cdiamonds >=5 || Cclubs >=5 || Cspades >=5) {this.setState(prevState => ({CUOptions:
       {
         royalFlush: prevState.CUOptions.royalFlush,
@@ -526,8 +551,14 @@ class App extends Component {
         twoPairs: prevState.CUOptions.twoPairs,
         onePair: prevState.CUOptions.onePair,
         hightCard: prevState.CUOptions.hightCard
-      }}))
-  }
+      }}))}
+      if (Chearts >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'heart')
+      } else if (Cclubs >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'club')
+      } else if (Cdiamonds >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'diamond')
+      } else if (Cspades >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'spade')}
+      if (Chearts ==7 || Cdiamonds ==7 || Cclubs ==7 || Cspades ==7) {this.setState({highCCard: tableAndCUHandFilter[6].number})}
+      else if (Chearts ==6 || Cdiamonds ==6 || Cclubs ==6 || Cspades ==6) {this.setState({highCCard: tableAndCUHandFilter[5].number})}
+      else if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState({highCCard: tableAndCUHandFilter[4].number})}
   }
 
   checkIfFullHouse = () => {
@@ -541,8 +572,9 @@ class App extends Component {
     })
     tableAndPlayerHand.sort(this.compareNumbers)
     let pNext = false
+    let pNumber
     tableAndPlayerHand.forEach((hand, id) => {
-      if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2]) {tableAndPlayerHand.splice(id, 3); pNext = true}
+      if (hand == tableAndPlayerHand[id + 1] && hand == tableAndPlayerHand[id + 2]) {pNumber = hand; tableAndPlayerHand.splice(id, 3); pNext = true}
     })
     if (pNext) {
     tableAndPlayerHand.forEach((hand, id) => {
@@ -558,8 +590,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: prevState.playerOptions.onePair,
           hightCard: prevState.playerOptions.hightCard
-        }}))}
-    })}
+        },
+          highPCard: pNumber}))}})}
 
     const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
@@ -571,8 +603,9 @@ class App extends Component {
     })
     tableAndCUHand.sort(this.compareNumbers)
     let cNext = false
+    let cNumber
     tableAndCUHand.forEach((hand, id) => {
-      if (hand == tableAndCUHand[id + 1] && hand == tableAndCUHand[id + 2]) {tableAndCUHand.splice(id, 3); cNext = true}
+      if (hand == tableAndCUHand[id + 1] && hand == tableAndCUHand[id + 2]) {cNumber = hand; tableAndCUHand.splice(id, 3); cNext = true}
     })
     if (cNext) {
     tableAndCUHand.forEach((hand, id) => {
@@ -588,9 +621,9 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: prevState.CUOptions.onePair,
           hightCard: prevState.CUOptions.hightCard
-        }}))}
-    })}
-  }
+        },
+          highCCard: cNumber}))}})}
+        }
 
   checkIfStraightFlush = () => {
     const tableHand = [...this.state.tableHand]
@@ -614,15 +647,20 @@ class App extends Component {
     let clubs = 0
     let diamonds = 0
     let spades = 0
+    
+    let tableAndPlayerHandFilter = []
     if (tableAndPlayerHand.length >= 5) {
-      if (tableAndPlayerHand.length == 7 && tableAndPlayerHand[6].number - 4 == tableAndPlayerHand[2].number) {
-          for (let i=2; i<tableAndPlayerHand.length; i++) {
-            if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-            else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-            else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-            else {spades++}
-            }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+      tableAndPlayerHand.forEach(hand => {
+        if (hand.color === 'heart') {hearts++}
+        else if (hand.color === 'diamond') {diamonds++}
+        else if (hand.color === 'club') {clubs++}
+        else {spades++}})
+        if (hearts >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'heart')
+      } else if (clubs >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'club')
+      } else if (diamonds >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'diamond')
+      } else if (spades >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'spade')}
+      if (tableAndPlayerHandFilter.length == 7 && tableAndPlayerHandFilter[6].number - 4 == tableAndPlayerHandFilter[2].number) {
+            this.setState(prevState => ({playerOptions:
             {
               royalFlush: prevState.playerOptions.royalFlush,
               straightFlush: true,
@@ -634,16 +672,10 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
-      } else if (tableAndPlayerHand.length >= 6 && tableAndPlayerHand[5].number - 4 == tableAndPlayerHand[1].number) {
-        for (let i=1; i<6; i++) {
-          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-          else {spades++}
-          }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            },
+              highPCard: tableAndPlayerHandFilter[6].number}))
+      } else if (tableAndPlayerHandFilter.length >= 6 && tableAndPlayerHandFilter[5].number - 4 == tableAndPlayerHandFilter[1].number) {
+          this.setState(prevState => ({playerOptions:
             {
               royalFlush: prevState.playerOptions.royalFlush,
               straightFlush: true,
@@ -655,16 +687,10 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
-      } else if (tableAndPlayerHand.length >= 5 && tableAndPlayerHand[4].number - 4 == tableAndPlayerHand[0].number) {
-        for (let i=0; i<5; i++) {
-          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-          else {spades++}
-          }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            },
+              highPCard: tableAndPlayerHandFilter[5].number}))
+      } else if (tableAndPlayerHandFilter.length >= 5 && tableAndPlayerHandFilter[4].number - 4 == tableAndPlayerHandFilter[0].number) {
+          this.setState(prevState => ({playerOptions:
             {
               royalFlush: prevState.playerOptions.royalFlush,
               straightFlush: true,
@@ -676,9 +702,9 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
-      }
+            },
+              highPCard: tableAndPlayerHandFilter[4].number}))
+            } 
       }
 
     const tableCUHand = [...this.state.tableHand]
@@ -702,15 +728,19 @@ class App extends Component {
     let Cclubs = 0
     let Cdiamonds = 0
     let Cspades = 0
+    let tableAndCUHandFilter = []
     if (tableAndCUHand.length >= 5) {
-      if (tableAndCUHand.length == 7 && tableAndCUHand[6].number - 4 == tableAndCUHand[2].number) {
-          for (let i=2; i<tableAndCUHand.length; i++) {
-            if (tableAndCUHand[i].color === 'heart') {Chearts++}
-            else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-            else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-            else {Cspades++}
-            }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+      tableAndCUHand.forEach(hand => {
+        if (hand.color === 'heart') {Chearts++}
+        else if (hand.color === 'diamond') {Cdiamonds++}
+        else if (hand.color === 'club') {Cclubs++}
+        else {Cspades++}})
+        if (Chearts >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'heart')
+      } else if (Cclubs >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'club')
+      } else if (Cdiamonds >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'diamond')
+      } else if (Cspades >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'spade')}
+      if (tableAndCUHandFilter.length == 7 && tableAndCUHandFilter[6].number - 4 == tableAndCUHandFilter[2].number) {
+          this.setState(prevState => ({CUOptions:
             {
               royalFlush: prevState.CUOptions.royalFlush,
               straightFlush: true,
@@ -722,16 +752,10 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      } else if (tableAndCUHand.length >= 6 && tableAndCUHand[5].number - 4 == tableAndCUHand[1].number) {
-        for (let i=1; i<6; i++) {
-          if (tableAndCUHand[i].color === 'heart') {Chearts++}
-          else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-          else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-          else {Cspades++}
-          }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+            },
+            highCCard: tableAndCUHandFilter[6].number}))
+      } else if (tableAndCUHandFilter.length >= 6 && tableAndCUHandFilter[5].number - 4 == tableAndCUHandFilter[1].number) {
+        this.setState(prevState => ({CUOptions:
             {
               royalFlush: prevState.CUOptions.royalFlush,
               straightFlush: true,
@@ -743,16 +767,10 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      } else if (tableAndCUHand.length >= 5 && tableAndCUHand[4].number - 4 == tableAndCUHand[0].number) {
-        for (let i=0; i<5; i++) {
-          if (tableAndCUHand[i].color === 'heart') {Chearts++}
-          else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-          else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-          else {Cspades++}
-          }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+            },
+            highCCard: tableAndCUHandFilter[5].number}))
+      } else if (tableAndCUHandFilter.length >= 5 && tableAndCUHandFilter[4].number - 4 == tableAndCUHandFilter[0].number) {
+        this.setState(prevState => ({CUOptions:
             {
               royalFlush: prevState.CUOptions.royalFlush,
               straightFlush: true,
@@ -764,10 +782,8 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      }
-      }
+            },
+            highCCard: tableAndCUHandFilter[4].number}))}}
   }
   
   checkIfFour = () => {
@@ -793,9 +809,8 @@ class App extends Component {
           twoPairs: prevState.playerOptions.twoPairs,
           onePair: prevState.playerOptions.onePair,
           hightCard: prevState.playerOptions.hightCard
-        }}))
-    }
-    })
+        },
+        highPCard: hand}))}})
 
     const tableCUHand = [...this.state.tableHand]
     const AIHand = [...this.state.AIHand]
@@ -819,9 +834,8 @@ class App extends Component {
           twoPairs: prevState.CUOptions.twoPairs,
           onePair: prevState.CUOptions.onePair,
           hightCard: prevState.CUOptions.hightCard
-        }}))
-    }
-    })
+        },
+        highCCard: hand}))}})
   }
 
   checkIfRoyalFlush = () => {
@@ -846,15 +860,19 @@ class App extends Component {
     let clubs = 0
     let diamonds = 0
     let spades = 0
+    let tableAndPlayerHandFilter = []
     if (tableAndPlayerHand.length >= 5) {
-      if (tableAndPlayerHand.length == 7 && tableAndPlayerHand[6].number - 4 == tableAndPlayerHand[2].number && tableAndPlayerHand[6].number == 14) {
-          for (let i=2; i<tableAndPlayerHand.length; i++) {
-            if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-            else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-            else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-            else {spades++}
-            }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+      tableAndPlayerHand.forEach(hand => {
+        if (hand.color === 'heart') {hearts++}
+        else if (hand.color === 'diamond') {diamonds++}
+        else if (hand.color === 'club') {clubs++}
+        else {spades++}})
+        if (hearts >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'heart')
+      } else if (clubs >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'club')
+      } else if (diamonds >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'diamond')
+      } else if (spades >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'spade')}
+      if (tableAndPlayerHandFilter.length == 7 && tableAndPlayerHandFilter[6].number - 4 == tableAndPlayerHandFilter[2].number && tableAndPlayerHandFilter[6].number == 14) {
+          this.setState(prevState => ({playerOptions:
             {
               royalFlush: true,
               straightFlush: prevState.playerOptions.straightFlush,
@@ -866,16 +884,10 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
-      } else if (tableAndPlayerHand.length >= 6 && tableAndPlayerHand[5].number - 4 == tableAndPlayerHand[1].number && tableAndPlayerHand[5].number == 14) {
-        for (let i=1; i<6; i++) {
-          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-          else {spades++}
-          }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            },
+            highPCard: tableAndPlayerHandFilter[6].number}))
+      } else if (tableAndPlayerHandFilter.length >= 6 && tableAndPlayerHandFilter[5].number - 4 == tableAndPlayerHandFilter[1].number && tableAndPlayerHandFilter[5].number == 14) {
+        this.setState(prevState => ({playerOptions:
             {
               royalFlush: true,
               straightFlush: prevState.playerOptions.straightFlush,
@@ -887,16 +899,10 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
-      } else if (tableAndPlayerHand.length >= 5 && tableAndPlayerHand[4].number - 4 == tableAndPlayerHand[0].number && tableAndPlayerHand[4].number == 14) {
-        for (let i=0; i<5; i++) {
-          if (tableAndPlayerHand[i].color === 'heart') {hearts++}
-          else if (tableAndPlayerHand[i].color === 'diamond') {diamonds++}
-          else if (tableAndPlayerHand[i].color === 'club') {clubs++}
-          else {spades++}
-          }
-          if (hearts ==5 || diamonds ==5 || clubs ==5 || spades ==5) {this.setState(prevState => ({playerOptions:
+            },
+            highPCard: tableAndPlayerHandFilter[5].number}))
+      } else if (tableAndPlayerHandFilter.length >= 5 && tableAndPlayerHandFilter[4].number - 4 == tableAndPlayerHandFilter[0].number && tableAndPlayerHandFilter[4].number == 14) {
+        this.setState(prevState => ({playerOptions:
             {
               royalFlush: true,
               straightFlush: prevState.playerOptions.straightFlush,
@@ -908,8 +914,8 @@ class App extends Component {
               twoPairs: prevState.playerOptions.twoPairs,
               onePair: prevState.playerOptions.onePair,
               hightCard: prevState.playerOptions.hightCard
-            }}))
-        }
+            },
+            highPCard: tableAndPlayerHandFilter[4].number}))
       }
     }
 
@@ -919,9 +925,9 @@ class App extends Component {
     tableCUHand.push(AIHand[1])
     const tableAndCUHand = []
     tableCUHand.forEach(hand => {
-      tableAndCUHand.push(hand.number)
+      tableAndCUHand.push(hand)
     })
-    tableAndCUHand.sort(this.compareNumbersInObject)   
+    tableAndCUHand.sort(this.compareNumbersInObject)
     tableAndCUHand.forEach((hand, id) => {
       if (id <= (tableAndCUHand.length - 4) && hand.number == tableAndCUHand[id + 1].number && hand.number == tableAndCUHand[id + 2].number && hand.number == tableAndCUHand[id + 3].number) {
         tableAndCUHand.splice(id, 3)
@@ -930,19 +936,24 @@ class App extends Component {
       } else if (id <= (tableAndCUHand.length - 2) && hand.number == tableAndCUHand[id + 1].number) {
         tableAndCUHand.splice(id, 1)}
     })
+    
     let Chearts = 0
     let Cclubs = 0
     let Cdiamonds = 0
     let Cspades = 0
+    let tableAndCUHandFilter = []
     if (tableAndCUHand.length >= 5) {
-      if (tableAndCUHand.length == 7 && tableAndCUHand[6].number - 4 == tableAndCUHand[2].number && tableAndCUHand[6].number == 14) {
-          for (let i=2; i<tableAndCUHand.length; i++) {
-            if (tableAndCUHand[i].color === 'heart') {Chearts++}
-            else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-            else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-            else {Cspades++}
-            }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+      tableAndCUHand.forEach(hand => {
+        if (hand.color === 'heart') {Chearts++}
+        else if (hand.color === 'diamond') {Cdiamonds++}
+        else if (hand.color === 'club') {Cclubs++}
+        else {Cspades++}})
+        if (Chearts >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'heart')
+      } else if (Cclubs >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'club')
+      } else if (Cdiamonds >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'diamond')
+      } else if (Cspades >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'spade')}
+      if (tableAndCUHandFilter.length == 7 && tableAndCUHandFilter[6].number - 4 == tableAndCUHandFilter[2].number && tableAndCUHandFilter[6].number == 14) {
+          this.setState(prevState => ({CUOptions:
             {
               royalFlush: true,
               straightFlush: prevState.CUOptions.straightFlush,
@@ -954,16 +965,10 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      } else if (tableAndCUHand.length >= 6 && tableAndCUHand[5].number - 4 == tableAndCUHand[1].number && tableAndCUHand[5].number == 14) {
-        for (let i=1; i<6; i++) {
-          if (tableAndCUHand[i].color === 'heart') {Chearts++}
-          else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-          else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-          else {Cspades++}
-          }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+            },
+            highCCard: tableAndCUHandFilter[6].number}))
+      } else if (tableAndCUHandFilter.length >= 6 && tableAndCUHandFilter[5].number - 4 == tableAndCUHandFilter[1].number && tableAndCUHandFilter[5].number == 14) {
+        this.setState(prevState => ({CUOptions:
             {
               royalFlush: true,
               straightFlush: prevState.CUOptions.straightFlush,
@@ -975,16 +980,10 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      } else if (tableAndCUHand.length >= 5 && tableAndCUHand[4].number - 4 == tableAndCUHand[0].number && tableAndCUHand[4].number == 14) {
-        for (let i=0; i<5; i++) {
-          if (tableAndCUHand[i].color === 'heart') {Chearts++}
-          else if (tableAndCUHand[i].color === 'diamond') {Cdiamonds++}
-          else if (tableAndCUHand[i].color === 'club') {Cclubs++}
-          else {Cspades++}
-          }
-          if (Chearts ==5 || Cdiamonds ==5 || Cclubs ==5 || Cspades ==5) {this.setState(prevState => ({CUOptions:
+            },
+            highCCard: tableAndCUHandFilter[5].number}))
+      } else if (tableAndCUHandFilter.length >= 5 && tableAndCUHandFilter[4].number - 4 == tableAndCUHandFilter[0].number && tableAndCUHandFilter[4].number == 14) {
+        this.setState(prevState => ({CUOptions:
             {
               royalFlush: true,
               straightFlush: prevState.CUOptions.straightFlush,
@@ -996,10 +995,8 @@ class App extends Component {
               twoPairs: prevState.CUOptions.twoPairs,
               onePair: prevState.CUOptions.onePair,
               hightCard: prevState.CUOptions.hightCard
-            }}))
-        }
-      }
-    }
+            },
+            highCCard: tableAndCUHandFilter[4].number}))}}
   }
 
   getPlayersCards = () => {
@@ -1091,11 +1088,13 @@ class App extends Component {
     return ( 
     <div className="game_area">
       <button onClick={this.getPlayersCards}>SPRAWDŹ</button>
-      <button onClick={this.getTableCards}>SPRAWDŹ3</button>
-      <button onClick={this.getAICards}>SPRAWDŹ2</button>
-      <CU cards={this.state.AIHand}/>
+      <button onClick={this.getTableCards}>SPRAWDŹ2</button>
+      <button onClick={this.getAICards}>SPRAWDŹ3</button>
+      <button onClick={this.checkOptions}>SPRAWDŹ4</button>
+      <button onClick={this.checkState}>SPRAWDŹ5</button>
+      <CU cards={this.state.AIHand} options={this.state.CUOptions}/>
       <Table cards={this.state.tableHand} />
-      <Player cards={this.state.playerHand}/>
+      <Player cards={this.state.playerHand} options={this.state.playerOptions}/>
     </div>
    );
   }
