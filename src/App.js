@@ -1093,7 +1093,7 @@ class App extends Component {
       <button onClick={this.checkOptions}>SPRAWDŹ4</button>
       <button onClick={this.checkState}>SPRAWDŹ5</button>
       <CU cards={this.state.AIHand} options={this.state.CUOptions}/>
-      <Table cards={this.state.tableHand} />
+      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard}/>
       <Player cards={this.state.playerHand} options={this.state.playerOptions}/>
     </div>
    );
