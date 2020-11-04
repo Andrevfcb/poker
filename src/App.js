@@ -149,7 +149,7 @@ class App extends Component {
     highPCard: 0,
     highCCard: 0,
     playerMoney: 200,
-    cuMoney: 200,
+    cuMoney: 500,
     playerBID: 0,
     cuBID: 0,
     allBID: 0,
@@ -159,7 +159,7 @@ class App extends Component {
     playerPlayed: false,
     cuPlayed: false,
     part: 0,
-    whoWin: null
+    round: 1
   }
 
 
@@ -177,26 +177,72 @@ class App extends Component {
     return a.number - b.number
   }
   
+  restart = () => {
+    this.setState(prevState => ({
+    playerHand: [],
+    AIHand: [],
+    tableHand: [],
+    playerBID: 0,
+    cuBID: 0,
+    allBID: 0,
+    playerPlayed: false,
+    cuPlayed: false,
+    turn: 1,
+    part: 0,
+    round: prevState.round++,
+    playerOptions:
+    {
+      royalFlush: false,
+      straightFlush: false,
+      fourOfKind: false,
+      fullHouse: false,
+      flush: false,
+      streigh: false,
+      threeOfAKind: false,
+      twoPairs: false,
+      onePair: false,
+      hightCard: true
+    },
+    CUOptions:
+    {
+      royalFlush: false,
+      straightFlush: false,
+      fourOfKind: false,
+      fullHouse: false,
+      flush: false,
+      streigh: false,
+      threeOfAKind: false,
+      twoPairs: false,
+      onePair: false,
+      hightCard: true
+    }
+  }))
+  }
+
   checkState = () => {
     console.log(this.state.playerOptions);
     console.log(this.state.CUOptions);
     console.log(this.state.highPCard);
     console.log(this.state.highCCard);
     console.log(this.state.playerPlayed);
+    console.log(this.state.round);
   }
 
   play = () => {
-    if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
+    // if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
     this.getPlayersCards()
     this.getAICards()
     this.checkOptions()
-  }}
+  // }
+}
 
   getToNext = () => {
+    
     this.getTableCards()
     if (this.state.part == 3) {
       this.checkResult()
-    } else {
+      setTimeout(() => {this.play()}, 2000)
+    } else { 
     this.checkOptions()
     this.setState(prevState => ({
         playerBID: 0,
@@ -207,6 +253,10 @@ class App extends Component {
         turn: 1,
         part: prevState.part++
       }))
+    }
+    if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
+      setTimeout(() => {this.playerCHECK()}, 1000)
+      setTimeout(() => {this.cuCHECK()}, 2000)
     }
   }
 
@@ -236,6 +286,10 @@ class App extends Component {
     let pOption
     let cOption
     let whoWin
+    let cards = this.state.cards
+    let playerHand = this.state.playerHand
+    let AIHand = this.state.AIHand
+    let tableHand = this.state.tableHand
         if (this.state.playerOptions.royalFlush) {pOption = 10}
         else if (this.state.playerOptions.straightFlush)  {pOption = 9}
         else if (this.state.playerOptions.fourOfKind) {pOption = 8}
@@ -264,43 +318,34 @@ class App extends Component {
             else if (this.state.highPCard < this.state.highCCard) {whoWin = 2}
             else whoWin = 0
         }
+        playerHand.forEach(hand => {cards.push(hand)})
+        AIHand.forEach(hand => {cards.push(hand)})
+        tableHand.forEach(hand => {cards.push(hand)})
+        
         if (whoWin == 1) {
           alert('PLAYER WINS!')
           this.setState(prevState => ({
+          cards,
           playerMoney: prevState.playerMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
-          cuMoney: prevState.cuMoney,
-          playerBID: 0,
-          cuBID: 0,
-          allBID: 0,
-          playerPlayed: false,
-          cuPlayed: false,
-          turn: 1,
-          part: 0
-        }))} else if (whoWin == 2) {
+          cuMoney: prevState.cuMoney
+        }))
+        this.restart()
+      } else if (whoWin == 2) {
           alert('CU WINS!')
           this.setState(prevState => ({
+          cards,
           cuMoney: prevState.cuMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
-          playerMoney: prevState.playerMoney,
-          playerBID: 0,
-          cuBID: 0,
-          allBID: 0,
-          playerPlayed: false,
-          cuPlayed: false,
-          turn: 1,
-          part: 0
-        }))} else {
+          playerMoney: prevState.playerMoney
+        }))
+        this.restart()
+      } else {
           alert('DRAW')
           this.setState(prevState => ({
+          cards,
           cuMoney: prevState.cuMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2),
-          playerMoney: prevState.playerMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2),
-          playerBID: 0,
-          cuBID: 0,
-          allBID: 0,
-          playerPlayed: false,
-          cuPlayed: false,
-          turn: 1,
-          part: 0
-        }))}
+          playerMoney: prevState.playerMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2)
+        }))
+        this.restart()}
   }
   
   checkIfPair = () => {
@@ -1233,11 +1278,12 @@ class App extends Component {
     const cuBID = this.state.cuBID
     const playerBID = this.state.playerBID
     const difference = cuBID - playerBID
+    const playerMoney = this.state.playerMoney
     let playerPlayed = this.state.playerPlayed
     let cuPlayed = this.state.cuPlayed
     if (this.state.turn == 1) {
     if (cuBID > playerBID) {
-      if (this.state.playerMoney > cuBID) {
+      if ((playerMoney + playerBID) > cuBID) {
         playerPlayed = true
         this.setState(prevState => ({
           playerBID: prevState.playerBID + difference,
@@ -1257,11 +1303,24 @@ class App extends Component {
 }
 
   playerALLIN = () => {
+    const cuBID = this.state.cuBID
     const playerMoney = this.state.playerMoney
+    const playerBID = this.state.playerBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 1) {
+      playerPlayed = true
     this.setState(prevState => ({
       playerBID: prevState.playerBID + playerMoney,
-      playerMoney: 0
+      playerMoney: 0,
+      turn: 2,
+      playerPlayed
     }))
+    if (playerPlayed && cuPlayed && (playerMoney + playerBID <= cuBID)) {
+      this.getToNext()
+      setTimeout(() => {this.playerCHECK()}, 1000)
+      setTimeout(() => {this.cuCHECK()}, 2000)
+    }}
     console.log('Gracz: ALLIN');
   }
 
@@ -1287,6 +1346,7 @@ class App extends Component {
   } else console.log('NIE TWOJA TURA');
   
   }
+  
   cuCHECK = () => {
     const playerBID = this.state.playerBID
     const cuBID = this.state.cuBID
@@ -1315,11 +1375,12 @@ class App extends Component {
     const cuBID = this.state.cuBID
     const playerBID = this.state.playerBID
     const difference = playerBID - cuBID
+    const cuMoney = this.state.cuMoney
     let playerPlayed = this.state.playerPlayed
     let cuPlayed = this.state.cuPlayed
     if (this.state.turn == 2) {
     if (playerBID > cuBID) {
-      if (this.state.cuMoney > playerBID) {
+      if ((cuMoney + cuBID) > playerBID) {
         cuPlayed = true
         this.setState(prevState => ({
           cuBID: prevState.cuBID + difference,
@@ -1342,11 +1403,24 @@ class App extends Component {
 }
 
   cuALLIN = () => {
+    const playerBID = this.state.playerBID
     const cuMoney = this.state.cuMoney
+    const cuBID = this.state.cuBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 2) {
+      cuPlayed = true
     this.setState(prevState => ({
       cuBID: prevState.cuBID + cuMoney,
-      cuMoney: 0
+      cuMoney: 0,
+      turn: 1,
+      cuPlayed
     }))
+    if (playerPlayed && cuPlayed && (cuMoney + cuBID <= playerBID)) {
+      this.getToNext()
+      setTimeout(() => {this.playerCHECK()}, 1000)
+      setTimeout(() => {this.cuCHECK()}, 2000)
+    }}
     console.log('CU: ALLIN');
   }
 
