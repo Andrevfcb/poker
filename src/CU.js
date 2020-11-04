@@ -21,6 +21,14 @@ const CU = (props) => {
             {props.cards.length == 2 ? <img className='cu-cards-second' src={props.cards[1].img} alt="cu" /> : null}
             </div>
             <h4>Ręka CU: {options()}</h4>
+            <h4>Żetony CU: {props.money}</h4>
+            <button onClick={props.check}>CHECK</button>
+            <button onClick={props.call}>CALL</button>
+            <h4>twój raise: {props.cuRaiseValue}</h4>
+            <input type='number' name='cu' value={props.cuRaiseValue} onChange={props.handleRChange} />
+            <button onClick={props.raise}>RAISE</button>
+            <button onClick={props.allin}>ALL IN</button>
+            <button>FOLD</button>
         </div>
     )
 }

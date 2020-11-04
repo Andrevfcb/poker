@@ -20,6 +20,14 @@ const Player = (props) => {
             {props.cards.length == 2 ? <img className='player-cards-first' src={props.cards[0].img} alt="player" /> : null}
             {props.cards.length == 2 ? <img className='player-cards-second' src={props.cards[1].img} alt="player" /> : null}
             <h4>Twoja ręka: {options()}</h4>
+            <h4>Twoje żetony: {props.money}</h4>
+            <button onClick={props.check}>CHECK</button>
+            <button onClick={props.call}>CALL</button>
+            <h4>twój raise: {props.playerRaiseValue}</h4>
+            <input type='number' name='player' value={props.playerRaiseValue} onChange={props.handleRChange} />
+            <button onClick={props.raise}>RAISE</button>
+            <button onClick={props.allin}>ALL IN</button>
+            <button>FOLD</button>
             </div>
         </div>
     )

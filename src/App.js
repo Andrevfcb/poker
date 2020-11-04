@@ -147,7 +147,19 @@ class App extends Component {
       hightCard: true
     },
     highPCard: 0,
-    highCCard: 0
+    highCCard: 0,
+    playerMoney: 200,
+    cuMoney: 200,
+    playerBID: 0,
+    cuBID: 0,
+    allBID: 0,
+    playerRaise: 0,
+    cuRaise: 0,
+    turn: 1,
+    playerPlayed: false,
+    cuPlayed: false,
+    part: 0,
+    whoWin: null
   }
 
 
@@ -170,6 +182,42 @@ class App extends Component {
     console.log(this.state.CUOptions);
     console.log(this.state.highPCard);
     console.log(this.state.highCCard);
+    console.log(this.state.playerPlayed);
+  }
+
+  play = () => {
+    if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
+    this.getPlayersCards()
+    this.getAICards()
+    this.checkOptions()
+  }}
+
+  getToNext = () => {
+    this.getTableCards()
+    if (this.state.part == 3) {
+      this.checkResult()
+    } else {
+    this.checkOptions()
+    this.setState(prevState => ({
+        playerBID: 0,
+        cuBID: 0,
+        allBID: prevState.allBID + prevState.playerBID + prevState.cuBID,
+        playerPlayed: false,
+        cuPlayed: false,
+        turn: 1,
+        part: prevState.part++
+      }))
+    }
+  }
+
+  handleRChange = e => {
+    if (e.target.name === 'player') {
+    this.setState({
+      playerRaise: e.target.value
+    })
+  } else {this.setState({
+    cuRaise: e.target.value
+  })}
   }
 
   checkOptions = () => {
@@ -182,6 +230,77 @@ class App extends Component {
     this.checkIfFour()
     this.checkIfStraightFlush()
     this.checkIfRoyalFlush()
+  }
+
+  checkResult = () => {
+    let pOption
+    let cOption
+    let whoWin
+        if (this.state.playerOptions.royalFlush) {pOption = 10}
+        else if (this.state.playerOptions.straightFlush)  {pOption = 9}
+        else if (this.state.playerOptions.fourOfKind) {pOption = 8}
+        else if (this.state.playerOptions.fullHouse) {pOption = 7}
+        else if (this.state.playerOptions.flush) {pOption = 6}
+        else if (this.state.playerOptions.streigh) {pOption = 5}
+        else if (this.state.playerOptions.threeOfAKind) {pOption = 4}
+        else if (this.state.playerOptions.twoPairs) {pOption = 3}
+        else if (this.state.playerOptions.onePair) {pOption = 2}
+        else if (this.state.playerOptions.hightCard) {pOption = 1}
+
+        if (this.state.CUOptions.royalFlush) {cOption = 10}
+        else if (this.state.CUOptions.straightFlush)  {cOption = 9}
+        else if (this.state.CUOptions.fourOfKind) {cOption = 8}
+        else if (this.state.CUOptions.fullHouse) {cOption = 7}
+        else if (this.state.CUOptions.flush) {cOption = 6}
+        else if (this.state.CUOptions.streigh) {cOption = 5}
+        else if (this.state.CUOptions.threeOfAKind) {cOption = 4}
+        else if (this.state.CUOptions.twoPairs) {cOption = 3}
+        else if (this.state.CUOptions.onePair) {cOption = 2}
+        else if (this.state.CUOptions.hightCard) {cOption = 1}
+        if (pOption > cOption) {whoWin = 1}
+        else if (pOption < cOption) {whoWin = 2}
+        else {
+            if (this.state.highPCard > this.state.highCCard) {whoWin = 1}
+            else if (this.state.highPCard < this.state.highCCard) {whoWin = 2}
+            else whoWin = 0
+        }
+        if (whoWin == 1) {
+          alert('PLAYER WINS!')
+          this.setState(prevState => ({
+          playerMoney: prevState.playerMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
+          cuMoney: prevState.cuMoney,
+          playerBID: 0,
+          cuBID: 0,
+          allBID: 0,
+          playerPlayed: false,
+          cuPlayed: false,
+          turn: 1,
+          part: 0
+        }))} else if (whoWin == 2) {
+          alert('CU WINS!')
+          this.setState(prevState => ({
+          cuMoney: prevState.cuMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
+          playerMoney: prevState.playerMoney,
+          playerBID: 0,
+          cuBID: 0,
+          allBID: 0,
+          playerPlayed: false,
+          cuPlayed: false,
+          turn: 1,
+          part: 0
+        }))} else {
+          alert('DRAW')
+          this.setState(prevState => ({
+          cuMoney: prevState.cuMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2),
+          playerMoney: prevState.playerMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2),
+          playerBID: 0,
+          cuBID: 0,
+          allBID: 0,
+          playerPlayed: false,
+          cuPlayed: false,
+          turn: 1,
+          part: 0
+        }))}
   }
   
   checkIfPair = () => {
@@ -1084,17 +1203,190 @@ class App extends Component {
           }
   }
 
+  playerCHECK = () => {
+    const playerBID = this.state.playerBID
+    const cuBID = this.state.cuBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 1) {
+    if (playerBID == cuBID) {
+      playerPlayed = true
+    this.setState(prevState => ({
+      playerBID: prevState.playerBID,
+      playerMoney: prevState.playerMoney,
+      turn: 2,
+      playerPlayed
+    }))
+    
+    console.log('Gracz: CHECK');
+    console.log(playerPlayed);
+    console.log(cuPlayed);
+    if (playerPlayed && cuPlayed) {
+      this.getToNext()
+    }
+  } else {console.log('NIE MOŻESZ');
+  }} else console.log('NIE TWOJA TURA');
+  
+}
+
+  playerCALL = () => {
+    const cuBID = this.state.cuBID
+    const playerBID = this.state.playerBID
+    const difference = cuBID - playerBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 1) {
+    if (cuBID > playerBID) {
+      if (this.state.playerMoney > cuBID) {
+        playerPlayed = true
+        this.setState(prevState => ({
+          playerBID: prevState.playerBID + difference,
+          playerMoney: prevState.playerMoney - difference,
+          turn: 2,
+          playerPlayed
+        }))
+        console.log('Gracz: CALL');
+      if (playerPlayed && cuPlayed) {
+      this.getToNext()
+    }
+      } else {console.log('MASZ ZA MAŁO PIENIĘDZY!');
+      }
+    } else {console.log('NIE MOŻESZ');
+    }
+  } else console.log('NIE TWOJA TURA');
+}
+
+  playerALLIN = () => {
+    const playerMoney = this.state.playerMoney
+    this.setState(prevState => ({
+      playerBID: prevState.playerBID + playerMoney,
+      playerMoney: 0
+    }))
+    console.log('Gracz: ALLIN');
+  }
+
+  playerRAISE = () => {
+    const raise = this.state.playerRaise
+    const playerMoney = this.state.playerMoney
+    const cuBID = this.state.cuBID
+    const playerBID = this.state.playerBID
+    const difference = cuBID - playerBID
+    let playerPlayed = this.state.playerPlayed
+    if (this.state.turn == 1) {
+    if (raise >= 1 && raise <= playerMoney && raise > difference && !raise.includes('e')) {
+      let number = parseInt(raise);
+      playerPlayed = true
+      this.setState(prevState => ({
+        playerMoney: prevState.playerMoney - number,
+        playerBID: prevState.playerBID + number,
+        playerRaise: 0,
+        turn: 2,
+        playerPlayed
+      }))
+    } else console.log('nie działa');
+  } else console.log('NIE TWOJA TURA');
+  
+  }
+  cuCHECK = () => {
+    const playerBID = this.state.playerBID
+    const cuBID = this.state.cuBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 2) {
+    if (playerBID == cuBID) {
+      cuPlayed = true
+    this.setState(prevState => ({
+      cuBID: prevState.cuBID,
+      cuMoney: prevState.cuMoney,
+      turn: 1,
+      cuPlayed
+    }))
+    console.log('CU: CHECK');
+    console.log(playerPlayed);
+    console.log(cuPlayed);
+    if (playerPlayed && cuPlayed) {
+      this.getToNext()
+    }
+  } else {console.log('NIE MOŻESZ');
+  }} else console.log('NIE TWOJA TURA')
+}
+
+  cuCALL = () => {
+    const cuBID = this.state.cuBID
+    const playerBID = this.state.playerBID
+    const difference = playerBID - cuBID
+    let playerPlayed = this.state.playerPlayed
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 2) {
+    if (playerBID > cuBID) {
+      if (this.state.cuMoney > playerBID) {
+        cuPlayed = true
+        this.setState(prevState => ({
+          cuBID: prevState.cuBID + difference,
+          cuMoney: prevState.cuMoney - difference,
+          turn: 1,
+          cuPlayed
+        }))
+        console.log('CU: CALL');
+        console.log(playerPlayed);
+        console.log(cuPlayed);
+        if (playerPlayed && cuPlayed) {
+          this.getToNext()
+        }
+      } else {console.log('MASZ ZA MAŁO PIENIĘDZY!');
+      }
+    } else {console.log('NIE MOŻESZ');
+    }
+  } else console.log('NIE TWOJA TURA');
+  
+}
+
+  cuALLIN = () => {
+    const cuMoney = this.state.cuMoney
+    this.setState(prevState => ({
+      cuBID: prevState.cuBID + cuMoney,
+      cuMoney: 0
+    }))
+    console.log('CU: ALLIN');
+  }
+
+  cuRAISE = () => {
+    const raise = this.state.cuRaise
+    const cuMoney = this.state.cuMoney
+    const playerBID = this.state.playerBID
+    const cuBID = this.state.cuBID
+    const difference = playerBID - cuBID
+    let cuPlayed = this.state.cuPlayed
+    if (this.state.turn == 2) {
+    if (raise >= 1 && raise <= cuMoney && raise > difference && !raise.includes('e')) {
+      let number = parseInt(raise);
+      cuPlayed = true
+      this.setState(prevState => ({
+        cuMoney: prevState.cuMoney - number,
+        cuBID: prevState.cuBID + number,
+        cuRaise: 0,
+        turn: 1,
+        cuPlayed
+      }))
+    } else console.log('nie działa');
+  } else console.log('NIE TWOJA TURA');
+  
+}
+
   render() { 
     return ( 
     <div className="game_area">
       <button onClick={this.getPlayersCards}>SPRAWDŹ</button>
       <button onClick={this.getTableCards}>SPRAWDŹ2</button>
       <button onClick={this.getAICards}>SPRAWDŹ3</button>
-      <button onClick={this.checkOptions}>SPRAWDŹ4</button>
-      <button onClick={this.checkState}>SPRAWDŹ5</button>
-      <CU cards={this.state.AIHand} options={this.state.CUOptions}/>
-      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard}/>
-      <Player cards={this.state.playerHand} options={this.state.playerOptions}/>
+      {/* <button onClick={this.checkOptions}>SPRAWDŹ4</button> */}
+      <button onClick={this.checkState}>SPRAWDŹ5</button> 
+      <button onClick={this.play}>PLAY</button> 
+      <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
+
+      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin}/>
+
+      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange}/>
     </div>
    );
   }

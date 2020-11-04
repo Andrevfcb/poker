@@ -30,8 +30,6 @@ const Table = (props) => {
     }
     getPlayerHand()
     getCUHand()
-    console.log(pOption);
-    console.log(cOption);
     const checkResult = () => {
         if (pOption > cOption) return 'player win'
         else if (pOption < cOption) return 'CU win'
@@ -51,6 +49,11 @@ const Table = (props) => {
             {props.cards.length >= 4 ? <img className='table-cards-fourth' src={props.cards[3].img} alt="table" /> : null}
             {props.cards.length >= 5 ? <img className='table-cards-fifth' src={props.cards[4].img} alt="table" /> : null}
             {checkResult()}
+            {/* {props.whoWin} */}
+            <p className='cuBID'>CU: {props.cuBID}</p>
+            <p className='playerBID'>GRACZ: {props.playerBID}</p>
+            <p className='allBID'>ŁĄCZNIE: {props.allBID > 0 ? props.allBID : null}</p>
+
             </div>
         </div>
     )
