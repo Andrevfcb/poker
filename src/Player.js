@@ -27,7 +27,7 @@ const Player = (props) => {
             <input type='number' name='player' value={props.playerRaiseValue} onChange={props.handleRChange} />
             <button onClick={props.raise}>RAISE</button>
             <button onClick={props.allin}>ALL IN</button>
-            <button>FOLD</button>
+            <button onClick={props.fold}>FOLD</button>
             </div>
         </div>
     )

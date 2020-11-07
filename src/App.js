@@ -1346,6 +1346,27 @@ class App extends Component {
   } else console.log('NIE TWOJA TURA');
   
   }
+
+  playerFOLD = () => {
+    let cards = this.state.cards
+    let playerHand = this.state.playerHand
+    let AIHand = this.state.AIHand
+    let tableHand = this.state.tableHand
+    if (this.state.turn == 1) {
+    console.log('Gracz: FOLD');
+    alert('CU WINS!')
+    playerHand.forEach(hand => {cards.push(hand)})
+    AIHand.forEach(hand => {cards.push(hand)})
+    tableHand.forEach(hand => {cards.push(hand)})
+    this.setState(prevState => ({
+        cards,
+        cuMoney: prevState.cuMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
+        playerMoney: prevState.playerMoney,
+      }))
+    this.restart()
+    setTimeout(() => {this.play()}, 2000)
+  } else console.log('NIE TWOJA TURA');
+  }
   
   cuCHECK = () => {
     const playerBID = this.state.playerBID
@@ -1447,6 +1468,27 @@ class App extends Component {
   
 }
 
+cuFOLD = () => {
+  let cards = this.state.cards
+  let playerHand = this.state.playerHand
+  let AIHand = this.state.AIHand
+  let tableHand = this.state.tableHand
+  if (this.state.turn == 2) {
+  console.log('CU: FOLD');
+  alert('Player WINS!')
+  playerHand.forEach(hand => {cards.push(hand)})
+  AIHand.forEach(hand => {cards.push(hand)})
+  tableHand.forEach(hand => {cards.push(hand)})
+  this.setState(prevState => ({
+      cards,
+      playerMoney: prevState.playerMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
+      cuMoney: prevState.cuMoney,
+    }))
+  this.restart()
+  setTimeout(() => {this.play()}, 2000)
+} else console.log('NIE TWOJA TURA');
+}
+
   render() { 
     return ( 
     <div className="game_area">
@@ -1456,11 +1498,11 @@ class App extends Component {
       {/* <button onClick={this.checkOptions}>SPRAWDŹ4</button> */}
       <button onClick={this.checkState}>SPRAWDŹ5</button> 
       <button onClick={this.play}>PLAY</button> 
-      <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
+      <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
 
       <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin}/>
 
-      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange}/>
+      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} fold={this.playerFOLD} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange}/>
     </div>
    );
   }

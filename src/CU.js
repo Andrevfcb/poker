@@ -28,7 +28,7 @@ const CU = (props) => {
             <input type='number' name='cu' value={props.cuRaiseValue} onChange={props.handleRChange} />
             <button onClick={props.raise}>RAISE</button>
             <button onClick={props.allin}>ALL IN</button>
-            <button>FOLD</button>
+            <button onClick={props.fold}>FOLD</button>
         </div>
     )
 }
