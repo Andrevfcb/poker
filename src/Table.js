@@ -36,8 +36,11 @@ const Table = (props) => {
         else {
             if (props.highPCard > props.highCCard) return 'player win'
             else if (props.highPCard < props.highCCard) return 'CU win'
+            else {
+            if (props.highPCard2 > props.highCCard2) return 'player win'
+            else if (props.highPCard2 < props.highCCard2) return 'CU win'
             else return 'draw'
-        }
+        }}
     }
     
     return (
