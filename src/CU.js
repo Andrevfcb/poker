@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles/cu.css'
+import unactiveCard from './cards/Red_back.jpg'
 
 const CU = (props) => {
     const options = () => {
@@ -17,8 +18,10 @@ const CU = (props) => {
     return (
         <div className='cu'>
             <div className='cu-cards'>
-            {props.cards.length == 2 ? <img className='cu-cards-first' src={props.cards[0].img} alt="cu" /> : null}
-            {props.cards.length == 2 ? <img className='cu-cards-second' src={props.cards[1].img} alt="cu" /> : null}
+            {/* {props.cards.active ? null : <img className='cu-cards-first' src={unactiveCard} alt="cu" />}
+            {props.cards.active ? null :  <img className='cu-cards-second' src={unactiveCard} alt="cu" />} */}
+            {props.cards.length == 2 ? <img className='cu-cards-first' src={props.cards[0].active ? props.cards[0].img : unactiveCard} alt="cu" /> : null}
+            {props.cards.length == 2 ? <img className='cu-cards-second' src={props.cards[1].active ? props.cards[1].img : unactiveCard} alt="cu" /> : null}
             </div>
             <h4>Ręka CU: {options()}</h4>
             <h4>Żetony CU: {props.money}</h4>

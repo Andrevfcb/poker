@@ -115,11 +115,23 @@ class App extends Component {
       {id: 51, number: 14, color: 'spade', img: aS, active: true},
     ],
     playerHand:
-    [],
+    [
+    // {id: 0, number: 2, color: 'heart', img: twoH, active: false},
+    // {id: 0, number: 3, color: 'heart', img: twoH, active: false}
+  ],
     AIHand:
-    [],
+    [
+      // {id: 0, number: 2, color: 'heart', img: twoH, active: false},
+      // {id: 0, number: 3, color: 'heart', img: twoH, active: false}
+  ],
     tableHand:
-    [],
+    [
+    // {id: 0, number: 4, color: 'heart', img: twoH, active: false},
+    // {id: 0, number: 5, color: 'heart', img: twoH, active: false},
+    // {id: 0, number: 13, color: 'heart', img: twoH, active: false},
+    // {id: 0, number: 7, color: 'spade', img: twoH, active: false},
+    // {id: 0, number: 9, color: 'diamond', img: twoH, active: false},
+  ],
     playerOptions:
     {
       royalFlush: false,
@@ -237,12 +249,17 @@ class App extends Component {
 }
 
   getToNext = () => {
-    
-    this.getTableCards()
+    let AIHand = this.state.AIHand
+    // this.getTableCards()
     if (this.state.part == 3) {
-      this.checkResult()
-      setTimeout(() => {this.play()}, 2000)
+      
+      AIHand.forEach(hand => {
+        hand.active = true
+      })
+      
+      setTimeout(() => {this.checkResult()}, 2000)
     } else { 
+    this.getTableCards()
     this.checkOptions()
     this.setState(prevState => ({
         playerBID: 0,
@@ -253,11 +270,18 @@ class App extends Component {
         turn: 1,
         part: prevState.part++
       }))
+      if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
+        AIHand.forEach(hand => {
+          hand.active = true
+        })
+        setTimeout(() => {this.playerCHECK()}, 1000)
+        setTimeout(() => {this.cuCHECK()}, 2000)
+      }
     }
-    if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
-      setTimeout(() => {this.playerCHECK()}, 1000)
-      setTimeout(() => {this.cuCHECK()}, 2000)
-    }
+    // if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
+    //   setTimeout(() => {this.playerCHECK()}, 1000)
+    //   setTimeout(() => {this.cuCHECK()}, 2000)
+    // }
   }
 
   handleRChange = e => {
@@ -271,6 +295,7 @@ class App extends Component {
   }
 
   checkOptions = () => {
+    this.checkHighCard()
     this.checkIfPair()
     this.checkIfTwoPairs()
     this.checkIfThree()
@@ -319,13 +344,15 @@ class App extends Component {
             else whoWin = 0
         }
         playerHand.forEach(hand => {cards.push(hand)})
-        AIHand.forEach(hand => {cards.push(hand)})
-        tableHand.forEach(hand => {cards.push(hand)})
+        AIHand.forEach(hand => {
+          hand.active = true
+          cards.push(hand)
+        })
+        
         
         if (whoWin == 1) {
           alert('PLAYER WINS!')
           this.setState(prevState => ({
-          cards,
           playerMoney: prevState.playerMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
           cuMoney: prevState.cuMoney
         }))
@@ -333,7 +360,6 @@ class App extends Component {
       } else if (whoWin == 2) {
           alert('CU WINS!')
           this.setState(prevState => ({
-          cards,
           cuMoney: prevState.cuMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
           playerMoney: prevState.playerMoney
         }))
@@ -341,11 +367,39 @@ class App extends Component {
       } else {
           alert('DRAW')
           this.setState(prevState => ({
-          cards,
           cuMoney: prevState.cuMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2),
           playerMoney: prevState.playerMoney + ((prevState.allBID + prevState.playerBID + prevState.cuBID)/2)
         }))
+        tableHand.forEach(hand => {cards.push(hand)})
+        this.setState({cards})
         this.restart()}
+        setTimeout(() => {this.play()}, 2000)
+  }
+
+  checkHighCard = () => {
+    const tableHand = [...this.state.tableHand]
+    const playerHand = [...this.state.playerHand]
+    tableHand.push(playerHand[0])
+    tableHand.push(playerHand[1])
+    const tableAndPlayerHand = []
+    tableHand.forEach(hand => {
+      tableAndPlayerHand.push(hand.number)
+    })
+    tableAndPlayerHand.sort(this.compareNumbers)
+
+    const tableCUHand = [...this.state.tableHand]
+    const AIHand = [...this.state.AIHand]
+    tableCUHand.push(AIHand[0])
+    tableCUHand.push(AIHand[1])
+    const tableAndCUHand = []
+    tableCUHand.forEach(hand => {
+      tableAndCUHand.push(hand.number)
+    })
+    tableAndCUHand.sort(this.compareNumbers)
+    this.setState({
+      highPCard: tableAndPlayerHand[tableAndPlayerHand.length - 1],
+      highCCard: tableAndCUHand[tableAndCUHand.length - 1]
+    })
   }
   
   checkIfPair = () => {
@@ -531,49 +585,37 @@ class App extends Component {
       } else if (hand == tableAndPlayerHand[id + 1]) {
         tableAndPlayerHand.splice(id, 1)}
     })
+    const statePSet = () => {this.setState(prevState => ({playerOptions:
+      {
+        royalFlush: prevState.playerOptions.royalFlush,
+        straightFlush: prevState.playerOptions.straightFlush,
+        fourOfKind: prevState.playerOptions.fourOfKind,
+        fullHouse: prevState.playerOptions.fullHouse,
+        flush: prevState.playerOptions.flush,
+        streigh: true,
+        threeOfAKind: prevState.playerOptions.threeOfAKind,
+        twoPairs: prevState.playerOptions.twoPairs,
+        onePair: prevState.playerOptions.onePair,
+        hightCard: prevState.playerOptions.hightCard
+      }}))}
     if (tableAndPlayerHand.length >= 5) {
-      if (tableAndPlayerHand[6] - 4 == tableAndPlayerHand[2]) {this.setState(prevState => ({playerOptions:
-          {
-            royalFlush: prevState.playerOptions.royalFlush,
-            straightFlush: prevState.playerOptions.straightFlush,
-            fourOfKind: prevState.playerOptions.fourOfKind,
-            fullHouse: prevState.playerOptions.fullHouse,
-            flush: prevState.playerOptions.flush,
-            streigh: true,
-            threeOfAKind: prevState.playerOptions.threeOfAKind,
-            twoPairs: prevState.playerOptions.twoPairs,
-            onePair: prevState.playerOptions.onePair,
-            hightCard: prevState.playerOptions.hightCard
-          },
-          highPCard: tableAndPlayerHand[6]}))
-      } else if (tableAndPlayerHand[5] - 4 == tableAndPlayerHand[1]) {this.setState(prevState => ({playerOptions:
-        {
-          royalFlush: prevState.playerOptions.royalFlush,
-          straightFlush: prevState.playerOptions.straightFlush,
-          fourOfKind: prevState.playerOptions.fourOfKind,
-          fullHouse: prevState.playerOptions.fullHouse,
-          flush: prevState.playerOptions.flush,
-          streigh: true,
-          threeOfAKind: prevState.playerOptions.threeOfAKind,
-          twoPairs: prevState.playerOptions.twoPairs,
-          onePair: prevState.playerOptions.onePair,
-          hightCard: prevState.playerOptions.hightCard
-        },
-        highPCard: tableAndPlayerHand[5]}))
-      } else if (tableAndPlayerHand[4] - 4 == tableAndPlayerHand[0]) {this.setState(prevState => ({playerOptions:
-        {
-          royalFlush: prevState.playerOptions.royalFlush,
-          straightFlush: prevState.playerOptions.straightFlush,
-          fourOfKind: prevState.playerOptions.fourOfKind,
-          fullHouse: prevState.playerOptions.fullHouse,
-          flush: prevState.playerOptions.flush,
-          streigh: true,
-          threeOfAKind: prevState.playerOptions.threeOfAKind,
-          twoPairs: prevState.playerOptions.twoPairs,
-          onePair: prevState.playerOptions.onePair,
-          hightCard: prevState.playerOptions.hightCard
-        },
-        highPCard: tableAndPlayerHand[4]}))}
+      if (tableAndPlayerHand[6] - 4 == tableAndPlayerHand[2]) {
+          statePSet()
+          this.setState ({
+          highPCard: tableAndPlayerHand[6]})
+      } else if (tableAndPlayerHand[5] - 4 == tableAndPlayerHand[1]) {
+        statePSet()
+        this.setState({
+        highPCard: tableAndPlayerHand[5]})
+      } else if (tableAndPlayerHand[4] - 4 == tableAndPlayerHand[0]) {
+        statePSet()
+        this.setState({
+        highPCard: tableAndPlayerHand[4]})}
+        else if (tableAndPlayerHand[(tableAndPlayerHand.length - 1)] == 13 && tableAndPlayerHand[3] == 5) {
+        statePSet()
+        this.setState({
+        highPCard: tableAndPlayerHand[3]})
+        }
     }
 
     const tableCUHand = [...this.state.tableHand]
@@ -593,10 +635,9 @@ class App extends Component {
       } else if (hand == tableAndCUHand[id + 1]) {
         tableAndCUHand.splice(id, 1)}
     })
-    if (tableAndCUHand.length >= 5) {
-      if (tableAndCUHand[6] - 4 == tableAndCUHand[2]) {this.setState(prevState => ({CUOptions:
-          {
-            royalFlush: prevState.CUOptions.royalFlush,
+    const stateCSet = () => {this.setState(prevState => ({CUOptions:
+      {
+        royalFlush: prevState.CUOptions.royalFlush,
             straightFlush: prevState.CUOptions.straightFlush,
             fourOfKind: prevState.CUOptions.fourOfKind,
             fullHouse: prevState.CUOptions.fullHouse,
@@ -606,37 +647,26 @@ class App extends Component {
             twoPairs: prevState.CUOptions.twoPairs,
             onePair: prevState.CUOptions.onePair,
             hightCard: prevState.CUOptions.hightCard
-          },
-          highCCard: tableAndCUHand[6]}))
-      } else if (tableAndCUHand[5] - 4 == tableAndCUHand[1]) {this.setState(prevState => ({CUOptions:
-        {
-          royalFlush: prevState.CUOptions.royalFlush,
-          straightFlush: prevState.CUOptions.straightFlush,
-          fourOfKind: prevState.CUOptions.fourOfKind,
-          fullHouse: prevState.CUOptions.fullHouse,
-          flush: prevState.CUOptions.flush,
-          streigh: true,
-          threeOfAKind: prevState.CUOptions.threeOfAKind,
-          twoPairs: prevState.CUOptions.twoPairs,
-          onePair: prevState.CUOptions.onePair,
-          hightCard: prevState.CUOptions.hightCard
-        },
-        highCCard: tableAndCUHand[5]}))
-      } else if (tableAndCUHand[4] - 4 == tableAndCUHand[0]) {this.setState(prevState => ({CUOptions:
-        {
-          royalFlush: prevState.CUOptions.royalFlush,
-          straightFlush: prevState.CUOptions.straightFlush,
-          fourOfKind: prevState.CUOptions.fourOfKind,
-          fullHouse: prevState.CUOptions.fullHouse,
-          flush: prevState.CUOptions.flush,
-          streigh: true,
-          threeOfAKind: prevState.CUOptions.threeOfAKind,
-          twoPairs: prevState.CUOptions.twoPairs,
-          onePair: prevState.CUOptions.onePair,
-          hightCard: prevState.CUOptions.hightCard
-        },
-        highCCard: tableAndCUHand[4]}))}
-    }
+      }}))}
+    if (tableAndCUHand.length >= 5) {
+      if (tableAndCUHand[6] - 4 == tableAndCUHand[2]) {
+        stateCSet()
+        this.setState({
+          highCCard: tableAndCUHand[6]})
+      } else if (tableAndCUHand[5] - 4 == tableAndCUHand[1]) {
+        stateCSet()
+        this.setState({
+        highCCard: tableAndCUHand[5]})
+      } else if (tableAndCUHand[4] - 4 == tableAndCUHand[0]) {
+        stateCSet()
+        this.setState({
+        highCCard: tableAndCUHand[4]})
+      } else if (tableAndCUHand[(tableAndCUHand.length - 1)] == 13 && tableAndCUHand[3] == 5) {
+        stateCSet()
+        this.setState({
+        highCCard: tableAndCUHand[3]})
+        }
+    } 
   }
 
   checkIfFlush = () => {
@@ -813,6 +843,19 @@ class App extends Component {
     let spades = 0
     
     let tableAndPlayerHandFilter = []
+    const statePSet = () => {this.setState(prevState => ({playerOptions:
+      {
+        royalFlush: prevState.playerOptions.royalFlush,
+        straightFlush: true,
+        fourOfKind: prevState.playerOptions.fourOfKind,
+        fullHouse: prevState.playerOptions.fullHouse,
+        flush: prevState.playerOptions.flush,
+        streigh: prevState.playerOptions.streigh,
+        threeOfAKind: prevState.playerOptions.threeOfAKind,
+        twoPairs: prevState.playerOptions.twoPairs,
+        onePair: prevState.playerOptions.onePair,
+        hightCard: prevState.playerOptions.hightCard
+      }}))}
     if (tableAndPlayerHand.length >= 5) {
       tableAndPlayerHand.forEach(hand => {
         if (hand.color === 'heart') {hearts++}
@@ -824,51 +867,22 @@ class App extends Component {
       } else if (diamonds >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'diamond')
       } else if (spades >=5) {tableAndPlayerHandFilter = tableAndPlayerHand.filter(hand => hand.color === 'spade')}
       if (tableAndPlayerHandFilter.length == 7 && tableAndPlayerHandFilter[6].number - 4 == tableAndPlayerHandFilter[2].number) {
-            this.setState(prevState => ({playerOptions:
-            {
-              royalFlush: prevState.playerOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.playerOptions.fourOfKind,
-              fullHouse: prevState.playerOptions.fullHouse,
-              flush: prevState.playerOptions.flush,
-              streigh: prevState.playerOptions.streigh,
-              threeOfAKind: prevState.playerOptions.threeOfAKind,
-              twoPairs: prevState.playerOptions.twoPairs,
-              onePair: prevState.playerOptions.onePair,
-              hightCard: prevState.playerOptions.hightCard
-            },
-              highPCard: tableAndPlayerHandFilter[6].number}))
+          statePSet()
+          this.setState({
+          highPCard: tableAndPlayerHandFilter[6].number})
       } else if (tableAndPlayerHandFilter.length >= 6 && tableAndPlayerHandFilter[5].number - 4 == tableAndPlayerHandFilter[1].number) {
-          this.setState(prevState => ({playerOptions:
-            {
-              royalFlush: prevState.playerOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.playerOptions.fourOfKind,
-              fullHouse: prevState.playerOptions.fullHouse,
-              flush: prevState.playerOptions.flush,
-              streigh: prevState.playerOptions.streigh,
-              threeOfAKind: prevState.playerOptions.threeOfAKind,
-              twoPairs: prevState.playerOptions.twoPairs,
-              onePair: prevState.playerOptions.onePair,
-              hightCard: prevState.playerOptions.hightCard
-            },
-              highPCard: tableAndPlayerHandFilter[5].number}))
+          statePSet()
+          this.setState({
+            highPCard: tableAndPlayerHandFilter[5].number})
       } else if (tableAndPlayerHandFilter.length >= 5 && tableAndPlayerHandFilter[4].number - 4 == tableAndPlayerHandFilter[0].number) {
-          this.setState(prevState => ({playerOptions:
-            {
-              royalFlush: prevState.playerOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.playerOptions.fourOfKind,
-              fullHouse: prevState.playerOptions.fullHouse,
-              flush: prevState.playerOptions.flush,
-              streigh: prevState.playerOptions.streigh,
-              threeOfAKind: prevState.playerOptions.threeOfAKind,
-              twoPairs: prevState.playerOptions.twoPairs,
-              onePair: prevState.playerOptions.onePair,
-              hightCard: prevState.playerOptions.hightCard
-            },
-              highPCard: tableAndPlayerHandFilter[4].number}))
-            } 
+          statePSet()
+          this.setState({
+              highPCard: tableAndPlayerHandFilter[4].number})
+      } else if (tableAndPlayerHandFilter.length >= 5 && tableAndPlayerHandFilter[tableAndPlayerHandFilter.length - 1].number == 13 && tableAndPlayerHandFilter[3].number == 5) {
+          statePSet()
+          this.setState({
+            highPCard: tableAndPlayerHandFilter[3].number})
+      } 
       }
 
     const tableCUHand = [...this.state.tableHand]
@@ -893,6 +907,19 @@ class App extends Component {
     let Cdiamonds = 0
     let Cspades = 0
     let tableAndCUHandFilter = []
+    const stateCSet = () => {this.setState(prevState => ({CUOptions:
+      {
+        royalFlush: prevState.CUOptions.royalFlush,
+        straightFlush: true,
+        fourOfKind: prevState.CUOptions.fourOfKind,
+        fullHouse: prevState.CUOptions.fullHouse,
+        flush: prevState.CUOptions.flush,
+        streigh: prevState.CUOptions.streigh,
+        threeOfAKind: prevState.CUOptions.threeOfAKind,
+        twoPairs: prevState.CUOptions.twoPairs,
+        onePair: prevState.CUOptions.onePair,
+        hightCard: prevState.CUOptions.hightCard
+      }}))}
     if (tableAndCUHand.length >= 5) {
       tableAndCUHand.forEach(hand => {
         if (hand.color === 'heart') {Chearts++}
@@ -904,50 +931,23 @@ class App extends Component {
       } else if (Cdiamonds >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'diamond')
       } else if (Cspades >=5) {tableAndCUHandFilter = tableAndCUHand.filter(hand => hand.color === 'spade')}
       if (tableAndCUHandFilter.length == 7 && tableAndCUHandFilter[6].number - 4 == tableAndCUHandFilter[2].number) {
-          this.setState(prevState => ({CUOptions:
-            {
-              royalFlush: prevState.CUOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.CUOptions.fourOfKind,
-              fullHouse: prevState.CUOptions.fullHouse,
-              flush: prevState.CUOptions.flush,
-              streigh: prevState.CUOptions.streigh,
-              threeOfAKind: prevState.CUOptions.threeOfAKind,
-              twoPairs: prevState.CUOptions.twoPairs,
-              onePair: prevState.CUOptions.onePair,
-              hightCard: prevState.CUOptions.hightCard
-            },
-            highCCard: tableAndCUHandFilter[6].number}))
+        stateCSet()
+        this.setState({
+          highCCard: tableAndCUHandFilter[6].number})
       } else if (tableAndCUHandFilter.length >= 6 && tableAndCUHandFilter[5].number - 4 == tableAndCUHandFilter[1].number) {
-        this.setState(prevState => ({CUOptions:
-            {
-              royalFlush: prevState.CUOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.CUOptions.fourOfKind,
-              fullHouse: prevState.CUOptions.fullHouse,
-              flush: prevState.CUOptions.flush,
-              streigh: prevState.CUOptions.streigh,
-              threeOfAKind: prevState.CUOptions.threeOfAKind,
-              twoPairs: prevState.CUOptions.twoPairs,
-              onePair: prevState.CUOptions.onePair,
-              hightCard: prevState.CUOptions.hightCard
-            },
-            highCCard: tableAndCUHandFilter[5].number}))
+        stateCSet()
+        this.setState({
+          highCCard: tableAndCUHandFilter[5].number})
       } else if (tableAndCUHandFilter.length >= 5 && tableAndCUHandFilter[4].number - 4 == tableAndCUHandFilter[0].number) {
-        this.setState(prevState => ({CUOptions:
-            {
-              royalFlush: prevState.CUOptions.royalFlush,
-              straightFlush: true,
-              fourOfKind: prevState.CUOptions.fourOfKind,
-              fullHouse: prevState.CUOptions.fullHouse,
-              flush: prevState.CUOptions.flush,
-              streigh: prevState.CUOptions.streigh,
-              threeOfAKind: prevState.CUOptions.threeOfAKind,
-              twoPairs: prevState.CUOptions.twoPairs,
-              onePair: prevState.CUOptions.onePair,
-              hightCard: prevState.CUOptions.hightCard
-            },
-            highCCard: tableAndCUHandFilter[4].number}))}}
+        stateCSet()
+        this.setState({
+          highCCard: tableAndCUHandFilter[4].number})
+      } else if (tableAndCUHandFilter.length >= 5 && tableAndCUHandFilter[tableAndCUHandFilter.length - 1].number == 13 && tableAndCUHandFilter[3].number == 5) {
+        stateCSet()
+        this.setState({
+          highCCard: tableAndCUHandFilter[3].number})
+          }
+        }
   }
   
   checkIfFour = () => {
@@ -1166,11 +1166,11 @@ class App extends Component {
   getPlayersCards = () => {
     const cards = this.state.cards
     const playerHand = this.state.playerHand
-    if (playerHand.length == 2) {
-      cards.push(this.state.playerHand[0])
-      cards.push(this.state.playerHand[1])
-      playerHand.splice(0,2)
-    }
+    // if (playerHand.length == 2) {
+    //   cards.push(this.state.playerHand[0])
+    //   cards.push(this.state.playerHand[1])
+    //   playerHand.splice(0,2)
+    // }
     const getRandomOne = Math.floor(Math.random()*cards.length)
     playerHand.push(cards[getRandomOne])
     cards.splice(getRandomOne, 1)
@@ -1186,16 +1186,17 @@ class App extends Component {
   getAICards = () => {
     const cards = this.state.cards
     const AIHand = this.state.AIHand
-    if (AIHand.length == 2) {
-      cards.push(this.state.AIHand[0])
-      cards.push(this.state.AIHand[1])
-      AIHand.splice(0,2)
-    }
+    // if (AIHand.length == 2) {
+    //   cards.push(this.state.AIHand[0])
+    //   cards.push(this.state.AIHand[1])
+    //   AIHand.splice(0,2)
+    // }
     const getRandomOne = Math.floor(Math.random()*cards.length)
     AIHand.push(cards[getRandomOne])
     cards.splice(getRandomOne, 1)
     const getRandomTwo = Math.floor(Math.random()*cards.length)
     AIHand.push(cards[getRandomTwo])
+    AIHand.forEach(hand => {hand.active = false})
     cards.splice(getRandomTwo, 1)
     this.setState({
       cards,
@@ -1236,7 +1237,9 @@ class App extends Component {
           cards,
           tableHand
         })
-        } else if (tableHand.length == 5) {
+        } 
+        else if (tableHand.length == 5) {
+          setTimeout(() => {
           tableHand.forEach(hand => {
             cards.push(hand)
           })
@@ -1244,7 +1247,7 @@ class App extends Component {
           this.setState({
             cards,
             tableHand
-          })
+          })}, 2000)
           }
   }
 
@@ -1304,23 +1307,37 @@ class App extends Component {
 
   playerALLIN = () => {
     const cuBID = this.state.cuBID
+    const cuMoney = this.state.cuMoney
     const playerMoney = this.state.playerMoney
     const playerBID = this.state.playerBID
+    const difference = (playerMoney + playerBID) - (cuBID + cuMoney)
     let playerPlayed = this.state.playerPlayed
     let cuPlayed = this.state.cuPlayed
     if (this.state.turn == 1) {
       playerPlayed = true
-    this.setState(prevState => ({
-      playerBID: prevState.playerBID + playerMoney,
-      playerMoney: 0,
-      turn: 2,
-      playerPlayed
-    }))
+      if ((cuBID + cuMoney) < (playerMoney + playerBID)) {
+        this.setState(prevState => ({
+          playerBID: cuMoney + cuBID,
+          playerMoney: difference,
+          turn: 2,
+          playerPlayed
+        }))} else {
+          this.setState(prevState => ({
+            playerBID: prevState.playerBID + playerMoney,
+            playerMoney: 0,
+            turn: 2,
+            playerPlayed
+    }))}
     if (playerPlayed && cuPlayed && (playerMoney + playerBID <= cuBID)) {
       this.getToNext()
       setTimeout(() => {this.playerCHECK()}, 1000)
       setTimeout(() => {this.cuCHECK()}, 2000)
-    }}
+    } else if (cuMoney == 0) {
+      this.getToNext()
+      setTimeout(() => {this.playerCHECK()}, 1000)
+      setTimeout(() => {this.cuCHECK()}, 2000)
+    }
+  }
     console.log('Gracz: ALLIN');
   }
 
@@ -1356,7 +1373,10 @@ class App extends Component {
     console.log('Gracz: FOLD');
     alert('CU WINS!')
     playerHand.forEach(hand => {cards.push(hand)})
-    AIHand.forEach(hand => {cards.push(hand)})
+    AIHand.forEach(hand => {
+      hand.active = true
+      cards.push(hand)
+    })
     tableHand.forEach(hand => {cards.push(hand)})
     this.setState(prevState => ({
         cards,
@@ -1425,24 +1445,39 @@ class App extends Component {
 
   cuALLIN = () => {
     const playerBID = this.state.playerBID
+    const playerMoney = this.state.playerMoney
     const cuMoney = this.state.cuMoney
     const cuBID = this.state.cuBID
     let playerPlayed = this.state.playerPlayed
     let cuPlayed = this.state.cuPlayed
+    const difference = (cuBID + cuMoney) - (playerMoney + playerBID)
     if (this.state.turn == 2) {
+      console.log('CU: ALLIN');
       cuPlayed = true
+      if ((cuBID + cuMoney) > (playerMoney + playerBID)) {
     this.setState(prevState => ({
-      cuBID: prevState.cuBID + cuMoney,
-      cuMoney: 0,
+      cuBID: playerMoney + playerBID,
+      cuMoney: difference,
       turn: 1,
       cuPlayed
-    }))
+    }))} else {
+      this.setState(prevState => ({
+        cuBID: prevState.cuBID + cuMoney,
+        cuMoney: 0,
+        turn: 1,
+        cuPlayed
+    }))}
     if (playerPlayed && cuPlayed && (cuMoney + cuBID <= playerBID)) {
       this.getToNext()
       setTimeout(() => {this.playerCHECK()}, 1000)
       setTimeout(() => {this.cuCHECK()}, 2000)
-    }}
-    console.log('CU: ALLIN');
+    } else if (playerMoney == 0) {
+      this.getToNext()
+      setTimeout(() => {this.playerCHECK()}, 1000)
+      setTimeout(() => {this.cuCHECK()}, 2000)
+    }
+  }
+    
   }
 
   cuRAISE = () => {
@@ -1477,7 +1512,10 @@ cuFOLD = () => {
   console.log('CU: FOLD');
   alert('Player WINS!')
   playerHand.forEach(hand => {cards.push(hand)})
-  AIHand.forEach(hand => {cards.push(hand)})
+  AIHand.forEach(hand => {
+    hand.active = true
+    cards.push(hand)
+  })
   tableHand.forEach(hand => {cards.push(hand)})
   this.setState(prevState => ({
       cards,
@@ -1495,7 +1533,7 @@ cuFOLD = () => {
       <button onClick={this.getPlayersCards}>SPRAWDŹ</button>
       <button onClick={this.getTableCards}>SPRAWDŹ2</button>
       <button onClick={this.getAICards}>SPRAWDŹ3</button>
-      {/* <button onClick={this.checkOptions}>SPRAWDŹ4</button> */}
+      <button onClick={this.checkOptions}>SPRAWDŹ4</button>
       <button onClick={this.checkState}>SPRAWDŹ5</button> 
       <button onClick={this.play}>PLAY</button> 
       <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
