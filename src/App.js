@@ -162,7 +162,7 @@ class App extends Component {
     highPCard2: 0,
     highCCard: 0,
     highCCard2: 0,
-    playerMoney: 200,
+    playerMoney: 100,
     cuMoney: 200,
     playerBID: 0,
     cuBID: 0,
@@ -173,7 +173,9 @@ class App extends Component {
     playerPlayed: false,
     cuPlayed: false,
     part: 0,
-    round: 1
+    round: 1,
+    smallBlind: 10,
+    bigBlind: 20
   }
 
 
@@ -202,7 +204,7 @@ class App extends Component {
     allBID: 0,
     playerPlayed: false,
     cuPlayed: false,
-    turn: 1,
+    // turn: 1,
     part: 0,
     round: prevState.round++,
     playerOptions:
@@ -252,7 +254,116 @@ class App extends Component {
     this.getPlayersCards()
     this.getAICards()
     this.checkOptions()
+    this.getBlinds()
   // }
+}
+
+getBlinds = () => {
+  let playerSBlind = this.state.playerMoney - 10
+  let playerBBlind = this.state.playerMoney - 20
+  let cuSBlind = this.state.cuMoney - 10
+  let cuBBlind = this.state.cuMoney - 20
+  if (playerSBlind < 0) {
+    if (this.state.round % 2) {
+      this.setState({
+        turn: 2,
+        playerBID: 10 + playerSBlind,
+        playerMoney: 0,
+        cuBID: 20,
+        cuMoney: cuBBlind,
+        playerPlayed: true
+      })
+     } else {
+      this.setState({
+        turn: 2,
+        playerBID: 20 + playerBBlind,
+        playerMoney: 0,
+        cuBID: 10,
+        cuMoney: cuSBlind,
+        playerPlayed: true
+      })
+    }
+  }
+  else if (cuSBlind < 0) {
+    if (this.state.round % 2) {
+      this.setState({
+        turn: 1,
+        playerBID: 10,
+        playerMoney: playerSBlind,
+        cuBID: 20 + cuBBlind,
+        cuMoney: 0,
+        cuPlayed: true
+      })
+     } else {
+      this.setState({
+        turn: 1,
+        playerBID: 20,
+        playerMoney: playerBBlind,
+        cuBID: 10 + cuSBlind,
+        cuMoney: 0,
+        cuPlayed: true
+      })
+    }
+  }
+  else if (playerBBlind < 0) {
+    if (this.state.round % 2) {
+      this.setState({
+        turn: 1,
+        playerBID: 10,
+        playerMoney: playerSBlind,
+        cuBID: 20,
+        cuMoney: cuBBlind
+      })
+     } else {
+      this.setState({
+        turn: 2,
+        playerBID: 20 + playerBBlind,
+        playerMoney: 0,
+        cuBID: 10,
+        cuMoney: cuSBlind,
+        playerPlayed: true
+      })
+    }
+  }
+  else if (cuBBlind < 0) {
+    if (this.state.round % 2) {
+      this.setState({
+        turn: 1,
+        playerBID: 10,
+        playerMoney: playerSBlind,
+        cuBID: 20 + cuBBlind,
+        cuMoney: 0,
+        cuPlayed: true
+      })
+     } else {
+      this.setState({
+        turn: 2,
+        playerBID: 20,
+        playerMoney: playerBBlind,
+        cuBID: 10,
+        cuMoney: cuSBlind
+      })
+    }
+  }
+  else {
+  if (this.state.round % 2) {
+    this.setState({
+      turn: 1,
+      playerBID: 10,
+      playerMoney: playerSBlind,
+      cuBID: 20,
+      cuMoney: cuBBlind
+    })
+   } else {
+    this.setState({
+      turn: 2,
+      playerBID: 20,
+      playerMoney: playerBBlind,
+      cuBID: 10,
+      cuMoney: cuSBlind
+    })
+  }
+}
 }
 
   getToNext = () => {
@@ -274,17 +385,26 @@ class App extends Component {
         allBID: prevState.allBID + prevState.playerBID + prevState.cuBID,
         playerPlayed: false,
         cuPlayed: false,
-        turn: 1,
+        // turn: 1,
         part: prevState.part++
       }))
+      if (this.state.round % 2) {
+        this.setState({
+          turn: 1
+        })
+      } else {this.setState({turn: 2})}
       if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
         AIHand.forEach(hand => {
           hand.active = true
         })
+        if (this.state.round % 2) {
         setTimeout(() => {this.playerCHECK()}, 1000)
         setTimeout(() => {this.cuCHECK()}, 2000)
+      } else {
+        setTimeout(() => {this.cuCHECK()}, 1000)
+        setTimeout(() => {this.playerCHECK()}, 2000)
       }
-    }
+    }}
     // if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
     //   setTimeout(() => {this.playerCHECK()}, 1000)
     //   setTimeout(() => {this.cuCHECK()}, 2000)
@@ -1450,6 +1570,7 @@ class App extends Component {
     let playerPlayed = this.state.playerPlayed
     let cuPlayed = this.state.cuPlayed
     if (this.state.turn == 1) {
+      console.log('Gracz: ALLIN');
       playerPlayed = true
       if ((cuBID + cuMoney) < (playerMoney + playerBID)) {
         this.setState(prevState => ({
@@ -1466,15 +1587,20 @@ class App extends Component {
     }))}
     if (playerPlayed && cuPlayed && (playerMoney + playerBID <= cuBID)) {
       this.getToNext()
+      if (this.state.round % 2) {
       setTimeout(() => {this.playerCHECK()}, 1000)
       setTimeout(() => {this.cuCHECK()}, 2000)
+      } else {
+      setTimeout(() => {this.cuCHECK()}, 1000)
+      setTimeout(() => {this.playerCHECK()}, 2000)
+      }
     } else if (cuMoney == 0) {
       this.getToNext()
-      setTimeout(() => {this.playerCHECK()}, 1000)
-      setTimeout(() => {this.cuCHECK()}, 2000)
+      // setTimeout(() => {this.playerCHECK()}, 1000)
+      // setTimeout(() => {this.cuCHECK()}, 2000)
     }
   }
-    console.log('Gracz: ALLIN');
+    
   }
 
   playerRAISE = () => {
@@ -1605,12 +1731,17 @@ class App extends Component {
     }))}
     if (playerPlayed && cuPlayed && (cuMoney + cuBID <= playerBID)) {
       this.getToNext()
-      setTimeout(() => {this.playerCHECK()}, 1000)
-      setTimeout(() => {this.cuCHECK()}, 2000)
+      if (this.state.round % 2) {
+        setTimeout(() => {this.playerCHECK()}, 1000)
+        setTimeout(() => {this.cuCHECK()}, 2000)
+        } else {
+        setTimeout(() => {this.cuCHECK()}, 1000)
+        setTimeout(() => {this.playerCHECK()}, 2000)
+        }
     } else if (playerMoney == 0) {
       this.getToNext()
-      setTimeout(() => {this.playerCHECK()}, 1000)
-      setTimeout(() => {this.cuCHECK()}, 2000)
+      // setTimeout(() => {this.playerCHECK()}, 1000)
+      // setTimeout(() => {this.cuCHECK()}, 2000)
     }
   }
     
