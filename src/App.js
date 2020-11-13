@@ -162,7 +162,7 @@ class App extends Component {
     highPCard2: 0,
     highCCard: 0,
     highCCard2: 0,
-    playerMoney: 100,
+    playerMoney: 200,
     cuMoney: 200,
     playerBID: 0,
     cuBID: 0,
@@ -252,13 +252,18 @@ class App extends Component {
     else if (this.checkIfWin()) return alert("YOU WON!")
     // if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
     this.getPlayersCards()
-    this.getAICards()
-    this.checkOptions()
+    this.getAICards();
+    
+    setTimeout(() => {this.checkOptions()}, 1000)
+    // this.checkOptions()
     this.getBlinds()
+    if (!(this.state.round % 2)) {
+      setTimeout(() => {this.cuPlay()}, 2000)
+    }
   // }
 }
 
-getBlinds = () => {
+  getBlinds = () => {
   let playerSBlind = this.state.playerMoney - 10
   let playerBBlind = this.state.playerMoney - 20
   let cuSBlind = this.state.cuMoney - 10
@@ -374,7 +379,9 @@ getBlinds = () => {
       AIHand.forEach(hand => {
         hand.active = true
       })
-      
+      this.setState({
+        AIHand
+      })
       setTimeout(() => {this.checkResult()}, 2000)
     } else { 
     this.getTableCards()
@@ -397,6 +404,9 @@ getBlinds = () => {
         AIHand.forEach(hand => {
           hand.active = true
         })
+        this.setState({
+          AIHand
+        })
         if (this.state.round % 2) {
         setTimeout(() => {this.playerCHECK()}, 1000)
         setTimeout(() => {this.cuCHECK()}, 2000)
@@ -410,6 +420,484 @@ getBlinds = () => {
     //   setTimeout(() => {this.cuCHECK()}, 2000)
     // }
   }
+
+  cuPlay = () => {
+    const cuBID = this.state.cuBID
+    const cuMoney = this.state.cuMoney
+    const playerBID = this.state.playerBID
+    const playerMoney = this.state.playerMoney
+    const part = this.state.part
+    let cOption
+    if (this.state.CUOptions.royalFlush) {cOption = 10}
+    else if (this.state.CUOptions.straightFlush)  {cOption = 9}
+    else if (this.state.CUOptions.fourOfKind) {cOption = 8}
+    else if (this.state.CUOptions.fullHouse) {cOption = 7}
+    else if (this.state.CUOptions.flush) {cOption = 6}
+    else if (this.state.CUOptions.streigh) {cOption = 5}
+    else if (this.state.CUOptions.threeOfAKind) {cOption = 4}
+    else if (this.state.CUOptions.twoPairs) {cOption = 3}
+    else if (this.state.CUOptions.onePair) {cOption = 2}
+    else if (this.state.CUOptions.hightCard) {cOption = 1}
+    // console.log(cuMoney);
+    // console.log(`cu: ${cuBID}`);
+    // console.log(`player: ${playerBID}`);
+    const oneOfTwoBID = Math.floor(cuMoney/2)
+    const oneOfThreeBID = Math.floor(cuMoney/3)
+    const oneOfFourBID = Math.floor(cuMoney/4)
+    const oneOfFiveBID = Math.floor(cuMoney/5)
+    const oneOfSixBID = Math.floor(cuMoney/6)
+    const oneOfSevenBID = Math.floor(cuMoney/7)
+    const oneOfEightBID = Math.floor(cuMoney/8)
+    const oneOfNineBID = Math.floor(cuMoney/9)
+    const oneOfTenBID = Math.floor(cuMoney/10)
+
+    // console.log(oneOfTwoBID);
+    // console.log(oneOfThreeBID);
+    // console.log(oneOfFourBID);
+    // console.log(oneOfFiveBID);
+    // console.log(oneOfSixBID);
+    // console.log(oneOfSevenBID);
+    // console.log(oneOfEightBID);
+    // console.log(oneOfNineBID);
+    // console.log(oneOfTenBID);
+    console.log(cuBID);
+    console.log(playerBID);
+    console.log(cuMoney);
+    console.log(cOption);
+    
+    if (cuMoney <= 50) {
+      if (part == 0) {
+        if (cOption > 1) {
+        if (cuBID == playerBID) {
+          this.cuALLIN()
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+        } else {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuCALL()
+          }
+        }
+      }
+      else if (part == 1) {
+        if (cOption >= 3) {
+        if (cuBID == playerBID) {
+          this.cuALLIN()
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+        } else if (cOption == 2) {
+          if (cuBID == playerBID) {
+          this.cuRAISE(oneOfTwoBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+        } else if (cOption == 1) {
+          if (cuBID == playerBID) {
+            this.cuCHECK()
+            } else if (playerBID >= cuMoney + cuBID) {
+              this.cuALLIN()
+            } else if (cuBID < playerBID) {
+              this.cuCALL()
+            }
+        }
+      }
+      else if (part == 2) {
+        if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuALLIN()
+            } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+            } else if (cuBID < playerBID) {
+            this.cuALLIN()
+            }
+        } else if (cOption == 2) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfTwoBID)
+            } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+            } else if (cuBID < playerBID) {
+            this.cuALLIN()
+            }
+        } else if (cOption == 1) {
+            if (cuBID == playerBID) {
+              this.cuCHECK()
+            } else if (playerBID >= cuMoney + cuBID) {
+              this.cuALLIN()
+            } else if (cuBID < playerBID) {
+              this.cuCALL()
+            }
+          }
+      }
+      else if (part == 3) {
+        if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuALLIN()
+            } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+            } else if (cuBID < playerBID) {
+            this.cuALLIN()
+            }
+        } else if (cOption == 2) {
+          if (cuBID == playerBID) {
+            this.cuALLIN()
+            } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+            } else if (cuBID < playerBID) {
+            this.cuALLIN()
+            }
+        } else if (cOption == 1) {
+            if (cuBID == playerBID) {
+              this.cuCHECK()
+            } else if (playerBID >= cuMoney + cuBID) {
+              this.cuFOLD()
+            } else if (cuBID < playerBID) {
+              this.cuFOLD()
+            }
+          }
+      } else {
+    if (cuBID == playerBID) {
+    this.cuCHECK()
+    } else if (playerBID >= cuMoney + cuBID) {
+      this.cuALLIN()
+    } else if (cuBID < playerBID) {
+      this.cuCALL()
+    }
+  }} else if (cuMoney > 50 && cuMoney <= 200 ) {
+    if (part == 0) {
+      if (cOption > 1) {
+        if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuCALL()
+          }
+      } else {
+          if (cuBID == playerBID) {
+            this.cuCHECK()
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuFOLD()
+          } else if (cuBID < playerBID && playerBID < oneOfFiveBID) {
+            this.cuCALL()
+          } else if (cuBID < playerBID) {
+            this.cuFOLD()
+          }
+      }
+    }
+    else if (part == 1) {
+      if (cOption >= 5) {
+        if (cuBID == playerBID) {
+            this.cuRAISE(oneOfThreeBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfThreeBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfNineBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      }
+    }
+    else if (part == 2) {
+      if (cOption >= 5) {
+        if (cuBID == playerBID) {
+            this.cuRAISE(oneOfThreeBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfNineBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      }
+    }
+    else if (part == 3) {
+      if (cOption >= 5) {
+        if (cuBID == playerBID) {
+            this.cuRAISE(oneOfTwoBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (cuBID < playerBID) {
+            this.cuCALL()
+          }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && cuBID < oneOfTenBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      }
+    } else {
+    if (cuBID == playerBID) {
+    this.cuCHECK()
+    } else if (playerBID >= cuMoney + cuBID) {
+      this.cuALLIN()
+    } else if (cuBID < playerBID) {
+      this.cuCALL()
+    }
+  }} else if (cuMoney > 200) {
+    if (part == 0) {
+      if (cOption > 1) {
+        if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFiveBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption == 1) {
+          if (cuBID == playerBID) {
+            this.cuCHECK()
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuFOLD()
+          } else if (cuBID < playerBID && playerBID < oneOfFiveBID) {
+            this.cuCALL()
+          } else if (cuBID < playerBID) {
+            this.cuFOLD()
+          }
+      }
+    }
+    else if (part == 1) {
+      if (cOption >= 5) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfFourBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+            this.cuRAISE(oneOfFiveBID)
+          } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption >= 3) {
+          if (cuBID == playerBID) {
+            this.cuRAISE(oneOfNineBID)
+          } else if (playerBID >= cuMoney + cuBID) {
+            this.cuALLIN()
+          } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+            this.cuCALL()
+          } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+            this.cuCALL()
+          } else if (cuBID < playerBID) {
+            this.cuALLIN()
+          }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+          this.cuCHECK()
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuFOLD()
+        } else if (cuBID < playerBID && playerBID < oneOfNineBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      }
+    }
+    else if (part == 2) {
+      if (cOption >= 5) {
+        if (cuBID == playerBID) {
+          this.cuRAISE(oneOfFourBID)
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+          this.cuRAISE(oneOfFiveBID)
+        } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID) {
+          this.cuALLIN()
+        }
+      } else if (cOption >= 3) {
+        if (cuBID == playerBID) {
+          this.cuRAISE(oneOfNineBID)
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID && playerBID < oneOfFiveBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+        this.cuRAISE(oneOfNineBID)
+      } else if (playerBID >= cuMoney + cuBID) {
+        this.cuFOLD()
+      } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+        this.cuCALL()
+      } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+        this.cuFOLD()
+      } else if (cuBID < playerBID) {
+        this.cuFOLD()
+      }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+        this.cuCHECK()
+      } else if (playerBID >= cuMoney + cuBID) {
+        this.cuFOLD()
+      } else if (cuBID < playerBID && playerBID < oneOfNineBID) {
+        this.cuCALL()
+      } else if (cuBID < playerBID) {
+        this.cuFOLD()
+      }
+      }
+    }
+    else if (part == 3) {
+      if (cOption >= 5) {
+        if (cuBID == playerBID) {
+          this.cuRAISE(oneOfFourBID)
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+          this.cuRAISE(oneOfFiveBID)
+        } else if (cuBID < playerBID && playerBID < oneOfFourBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID) {
+          this.cuALLIN()
+        }
+      } else if (cOption >= 3) {
+        if (cuBID == playerBID) {
+          this.cuRAISE(oneOfSevenBID)
+        } else if (playerBID >= cuMoney + cuBID) {
+          this.cuALLIN()
+        } else if (cuBID < playerBID && playerBID < oneOfFiveBID) {
+          this.cuCALL()
+        } else if (cuBID < playerBID) {
+          this.cuFOLD()
+        }
+      } else if (cOption == 2) {
+        if (cuBID == playerBID) {
+        this.cuRAISE(oneOfNineBID)
+      } else if (playerBID >= cuMoney + cuBID) {
+        this.cuFOLD()
+      } else if (cuBID < playerBID && playerBID < oneOfSixBID) {
+        this.cuCALL()
+      } else if (cuBID < playerBID) {
+        this.cuFOLD()
+      }
+      } else if (cOption == 1) {
+        if (cuBID == playerBID) {
+        this.cuCHECK()
+      } else if (playerBID >= cuMoney + cuBID) {
+        this.cuFOLD()
+      } else if (cuBID < playerBID && playerBID < oneOfEightBID) {
+        this.cuCALL()
+      } else if (cuBID < playerBID) {
+        this.cuFOLD()
+      }
+      }
+    } else {
+    if (cuBID == playerBID) {
+    this.cuCHECK()
+    } else if (playerBID >= cuMoney + cuBID) {
+      this.cuALLIN()
+    } else if (cuBID < playerBID) {
+      this.cuCALL()
+    }
+  }}
+  
+}
 
   handleRChange = e => {
     if (e.target.name === 'player') {
@@ -1508,6 +1996,8 @@ getBlinds = () => {
   }
 
   playerCHECK = () => {
+    const playerMoney = this.state.playerMoney
+    const cuMoney = this.state.cuMoney
     const playerBID = this.state.playerBID
     const cuBID = this.state.cuBID
     let playerPlayed = this.state.playerPlayed
@@ -1525,9 +2015,17 @@ getBlinds = () => {
     console.log('Gracz: CHECK');
     console.log(playerPlayed);
     console.log(cuPlayed);
+    if (playerMoney > 0 && cuMoney > 0 && this.state.part !== 3) {
+    setTimeout(() => {this.cuPlay()}, 2000)
+    } else if (!cuPlayed) {
+      setTimeout(() => {this.cuPlay()}, 2000)
+    }
     if (playerPlayed && cuPlayed) {
       this.getToNext()
-    }
+    } 
+    // else if (playerMoney > 0 && cuMoney > 0) {
+    // setTimeout(() => {this.cuPlay()}, 2000)
+    // }
   } else {console.log('NIE MOŻESZ');
   }} else console.log('NIE TWOJA TURA');
   
@@ -1551,6 +2049,12 @@ getBlinds = () => {
           playerPlayed
         }))
         console.log('Gracz: CALL');
+        if (this.state.part !== 3) {
+          setTimeout(() => {this.cuPlay()}, 2000)
+          } else if (!cuPlayed) {
+            setTimeout(() => {this.cuPlay()}, 2000)
+          }
+        // setTimeout(() => {this.cuPlay()}, 2000)
       if (playerPlayed && cuPlayed) {
       this.getToNext()
     }
@@ -1598,6 +2102,8 @@ getBlinds = () => {
       this.getToNext()
       // setTimeout(() => {this.playerCHECK()}, 1000)
       // setTimeout(() => {this.cuCHECK()}, 2000)
+    } else {
+      setTimeout(() => {this.cuPlay()}, 2000)
     }
   }
     
@@ -1621,6 +2127,7 @@ getBlinds = () => {
         turn: 2,
         playerPlayed
       }))
+      setTimeout(() => {this.cuPlay()}, 2000)
     } else console.log('nie działa');
   } else console.log('NIE TWOJA TURA');
   
@@ -1669,6 +2176,7 @@ getBlinds = () => {
     console.log(cuPlayed);
     if (playerPlayed && cuPlayed) {
       this.getToNext()
+      // setTimeout(() => {this.getToNext()}, 2000)
     }
   } else {console.log('NIE MOŻESZ');
   }} else console.log('NIE TWOJA TURA')
@@ -1695,6 +2203,7 @@ getBlinds = () => {
         console.log(playerPlayed);
         console.log(cuPlayed);
         if (playerPlayed && cuPlayed) {
+          // setTimeout(() => {this.getToNext()}, 2000)
           this.getToNext()
         }
       } else {console.log('MASZ ZA MAŁO PIENIĘDZY!');
@@ -1731,6 +2240,7 @@ getBlinds = () => {
     }))}
     if (playerPlayed && cuPlayed && (cuMoney + cuBID <= playerBID)) {
       this.getToNext()
+      // setTimeout(() => {this.getToNext()}, 2000)
       if (this.state.round % 2) {
         setTimeout(() => {this.playerCHECK()}, 1000)
         setTimeout(() => {this.cuCHECK()}, 2000)
@@ -1739,7 +2249,8 @@ getBlinds = () => {
         setTimeout(() => {this.playerCHECK()}, 2000)
         }
     } else if (playerMoney == 0) {
-      this.getToNext()
+      // this.getToNext()
+      setTimeout(() => {this.getToNext()}, 2000)
       // setTimeout(() => {this.playerCHECK()}, 1000)
       // setTimeout(() => {this.cuCHECK()}, 2000)
     }
@@ -1747,15 +2258,17 @@ getBlinds = () => {
     
   }
 
-  cuRAISE = () => {
-    const raise = this.state.cuRaise
+  cuRAISE = (raise) => {
+    // console.log(raise);
+    // const raise = this.state.cuRaise
+    // const raise = e
     const cuMoney = this.state.cuMoney
     const playerBID = this.state.playerBID
     const cuBID = this.state.cuBID
     const difference = playerBID - cuBID
     let cuPlayed = this.state.cuPlayed
     if (this.state.turn == 2) {
-    if (raise >= 1 && raise <= cuMoney && raise > difference && !raise.includes('e')) {
+    if (raise >= 1 && raise <= cuMoney && raise > difference) {
       let number = parseInt(raise);
       cuPlayed = true
       this.setState(prevState => ({
@@ -1765,6 +2278,7 @@ getBlinds = () => {
         turn: 1,
         cuPlayed
       }))
+      console.log(`CU: RAISE ${raise} `);
     } else console.log('nie działa');
   } else console.log('NIE TWOJA TURA');
   
@@ -1803,6 +2317,7 @@ cuFOLD = () => {
       <button onClick={this.checkOptions}>SPRAWDŹ4</button>
       <button onClick={this.checkState}>SPRAWDŹ5</button> 
       <button onClick={this.play}>PLAY</button> 
+      <button onClick={this.cuPlay}>CUPLAY</button> 
       <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
 
       <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} highPCard2={this.state.highPCard2} highCCard2={this.state.highCCard2} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin}/>
