@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles/table.css'
+import unactiveCard from './cards/Red_back.jpg'
 
 const Table = (props) => {
     let pOption
@@ -51,11 +52,14 @@ const Table = (props) => {
             {props.cards.length >= 3 ? <img className='table-cards-third' src={props.cards[2].img} alt="table" /> : null}
             {props.cards.length >= 4 ? <img className='table-cards-fourth' src={props.cards[3].img} alt="table" /> : null}
             {props.cards.length >= 5 ? <img className='table-cards-fifth' src={props.cards[4].img} alt="table" /> : null}
+            {props.play ? <img className='table-cards-all' src={unactiveCard} alt="table" /> : null}
             {/* {checkResult()} */}
             {/* {props.whoWin} */}
-            <p className='cuBID'>CU: {props.cuBID}</p>
-            <p className='playerBID'>GRACZ: {props.playerBID}</p>
-            <p className='allBID'>ŁĄCZNIE: {props.allBID > 0 ? props.allBID : null}</p>
+            <p className='cuBID'>{props.cuBID > 0 ? `CU: ${props.cuBID}` : null}</p>
+            <p className='playerBID'>{props.playerBID > 0 ? `PLAYER: ${props.playerBID}` : null}</p>
+            <p className='allBID'>{props.allBID > 0 ? `POT: ${props.allBID}` : null}</p>
+            <p className='playerPlay'>{props.playerPlay}</p>
+            <p className='cuPlay'>{props.cuPlay}</p>
 
             </div>
         </div>

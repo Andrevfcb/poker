@@ -18,13 +18,15 @@ const CU = (props) => {
     return (
         <div className='cu'>
             <div className='cu-cards'>
+            {props.play ? <h3>CU chips: {props.money}</h3> : null}
             {/* {props.cards.active ? null : <img className='cu-cards-first' src={unactiveCard} alt="cu" />}
             {props.cards.active ? null :  <img className='cu-cards-second' src={unactiveCard} alt="cu" />} */}
             {props.cards.length == 2 ? <img className='cu-cards-first' src={props.cards[0].active ? props.cards[0].img : unactiveCard} alt="cu" /> : null}
             {props.cards.length == 2 ? <img className='cu-cards-second' src={props.cards[1].active ? props.cards[1].img : unactiveCard} alt="cu" /> : null}
+            
             </div>
-            <h4>Ręka CU: {options()}</h4>
-            <h4>Żetony CU: {props.money}</h4>
+            {/* <h4>Ręka CU: {options()}</h4> */}
+            {/* <div className='cu-options'>
             <button onClick={props.check}>CHECK</button>
             <button onClick={props.call}>CALL</button>
             <h4>twój raise: {props.cuRaiseValue}</h4>
@@ -32,6 +34,7 @@ const CU = (props) => {
             <button onClick={props.raise}>RAISE</button>
             <button onClick={props.allin}>ALL IN</button>
             <button onClick={props.fold}>FOLD</button>
+            </div> */}
         </div>
     )
 }

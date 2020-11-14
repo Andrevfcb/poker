@@ -1,15 +1,17 @@
 .cu {
     position: absolute;
+    /* align-items: center; */
+    text-align: center;
     width: 20%;
-    height: 30%;
-    background-color: white;
-    top: 15%;
+    height: 20%;
+    /* background-color: white; */
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
   
-  .cu-cards-first {
+  /* .cu-cards-first {
     position: absolute;
     top: 100%;
     left: 0;
@@ -26,5 +28,12 @@
     transform: translateY(-100%);
     width: 100px;
     height: 100px;
+    border-radius: 7%;
+  } */
+  
+  .cu-cards img {
+    margin-top: 10px;
+    width: 100px;
+    height: 110px;
     border-radius: 7%;
   }

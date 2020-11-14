@@ -175,7 +175,11 @@ class App extends Component {
     part: 0,
     round: 1,
     smallBlind: 10,
-    bigBlind: 20
+    bigBlind: 20,
+    playerPlay: null,
+    cuPlay: null,
+    allInPlayed: false,
+    play: false
   }
 
 
@@ -207,6 +211,7 @@ class App extends Component {
     // turn: 1,
     part: 0,
     round: prevState.round++,
+    allInPlayed: false,
     playerOptions:
     {
       royalFlush: false,
@@ -236,6 +241,13 @@ class App extends Component {
   }))
   }
 
+  restartPlays = () => {
+    this.setState({
+      playerPlay: null,
+      cuPlay: null
+    })
+  }
+
   checkState = () => {
     console.log(this.state.playerOptions);
     console.log(this.state.CUOptions);
@@ -247,12 +259,16 @@ class App extends Component {
     console.log(this.state.highCCard2);
   }
 
-  play = () => {
+  play = (e) => {
     if (this.checkIfLost()) return alert("YOU LOST :(")
     else if (this.checkIfWin()) return alert("YOU WON!")
     // if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
     this.getPlayersCards()
     this.getAICards();
+    // console.log(e.target.style.display);
+    if (this.state.round == 1) {
+      this.setState({play: true})
+    e.target.style.display = 'none'}
     
     setTimeout(() => {this.checkOptions()}, 1000)
     // this.checkOptions()
@@ -399,7 +415,9 @@ class App extends Component {
         this.setState({
           turn: 1
         })
-      } else {this.setState({turn: 2})}
+      } else {
+        this.setState({turn: 2})
+      }
       if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
         AIHand.forEach(hand => {
           hand.active = true
@@ -2009,12 +2027,16 @@ class App extends Component {
       playerBID: prevState.playerBID,
       playerMoney: prevState.playerMoney,
       turn: 2,
-      playerPlayed
+      playerPlayed,
+      playerPlay: 'CHECK'
     }))
     
     console.log('Gracz: CHECK');
     console.log(playerPlayed);
     console.log(cuPlayed);
+    if (this.state.allInPlayed) {
+    this.restartPlays()
+    } else {setTimeout(() => {this.restartPlays()}, 1500)}
     if (playerMoney > 0 && cuMoney > 0 && this.state.part !== 3) {
     setTimeout(() => {this.cuPlay()}, 2000)
     } else if (!cuPlayed) {
@@ -2046,9 +2068,11 @@ class App extends Component {
           playerBID: prevState.playerBID + difference,
           playerMoney: prevState.playerMoney - difference,
           turn: 2,
-          playerPlayed
+          playerPlayed,
+          playerPlay: 'CALL'
         }))
         console.log('Gracz: CALL');
+        setTimeout(() => {this.restartPlays()}, 1500)
         if (this.state.part !== 3) {
           setTimeout(() => {this.cuPlay()}, 2000)
           } else if (!cuPlayed) {
@@ -2081,14 +2105,19 @@ class App extends Component {
           playerBID: cuMoney + cuBID,
           playerMoney: difference,
           turn: 2,
-          playerPlayed
+          playerPlayed,
+          playerPlay: 'ALL IN',
+          allInPlayed: true
         }))} else {
           this.setState(prevState => ({
             playerBID: prevState.playerBID + playerMoney,
             playerMoney: 0,
             turn: 2,
-            playerPlayed
+            playerPlayed,
+            playerPlay: 'ALL IN',
+            allInPlayed: true
     }))}
+    setTimeout(() => {this.restartPlays()}, 1500)
     if (playerPlayed && cuPlayed && (playerMoney + playerBID <= cuBID)) {
       this.getToNext()
       if (this.state.round % 2) {
@@ -2125,8 +2154,10 @@ class App extends Component {
         playerBID: prevState.playerBID + number,
         playerRaise: 0,
         turn: 2,
-        playerPlayed
+        playerPlayed,
+        playerPlay: 'RAISE'
       }))
+      setTimeout(() => {this.restartPlays()}, 1500)
       setTimeout(() => {this.cuPlay()}, 2000)
     } else console.log('nie działa');
   } else console.log('NIE TWOJA TURA');
@@ -2140,7 +2171,7 @@ class App extends Component {
     let tableHand = this.state.tableHand
     if (this.state.turn == 1) {
     console.log('Gracz: FOLD');
-    alert('CU WINS!')
+    setTimeout(() => {alert('CU WINS!')}, 1000)
     playerHand.forEach(hand => {cards.push(hand)})
     AIHand.forEach(hand => {
       hand.active = true
@@ -2151,7 +2182,9 @@ class App extends Component {
         cards,
         cuMoney: prevState.cuMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
         playerMoney: prevState.playerMoney,
+        playerPlay: 'FOLD'
       }))
+    setTimeout(() => {this.restartPlays()}, 1500)
     this.restart()
     setTimeout(() => {this.play()}, 2000)
   } else console.log('NIE TWOJA TURA');
@@ -2169,8 +2202,12 @@ class App extends Component {
       cuBID: prevState.cuBID,
       cuMoney: prevState.cuMoney,
       turn: 1,
-      cuPlayed
+      cuPlayed,
+      cuPlay: 'CHECK'
     }))
+    if (this.state.allInPlayed) {
+      this.restartPlays()
+      } else {setTimeout(() => {this.restartPlays()}, 1500)}
     console.log('CU: CHECK');
     console.log(playerPlayed);
     console.log(cuPlayed);
@@ -2197,14 +2234,19 @@ class App extends Component {
           cuBID: prevState.cuBID + difference,
           cuMoney: prevState.cuMoney - difference,
           turn: 1,
-          cuPlayed
+          cuPlayed,
+          cuPlay: 'CALL'
         }))
+        setTimeout(() => {this.restartPlays()}, 1500)
         console.log('CU: CALL');
         console.log(playerPlayed);
         console.log(cuPlayed);
         if (playerPlayed && cuPlayed) {
           // setTimeout(() => {this.getToNext()}, 2000)
           this.getToNext()
+          if (!(this.state.round % 2) && this.state.part !== 3) {
+            setTimeout(() => {this.cuPlay()}, 2000)
+          }
         }
       } else {console.log('MASZ ZA MAŁO PIENIĘDZY!');
       }
@@ -2230,14 +2272,19 @@ class App extends Component {
       cuBID: playerMoney + playerBID,
       cuMoney: difference,
       turn: 1,
-      cuPlayed
+      cuPlayed,
+      cuPlay: 'ALL IN',
+      allInPlayed: true
     }))} else {
       this.setState(prevState => ({
         cuBID: prevState.cuBID + cuMoney,
         cuMoney: 0,
         turn: 1,
-        cuPlayed
+        cuPlayed,
+        cuPlay: 'ALL IN',
+        allInPlayed: true
     }))}
+    setTimeout(() => {this.restartPlays()}, 1500)
     if (playerPlayed && cuPlayed && (cuMoney + cuBID <= playerBID)) {
       this.getToNext()
       // setTimeout(() => {this.getToNext()}, 2000)
@@ -2276,8 +2323,10 @@ class App extends Component {
         cuBID: prevState.cuBID + number,
         cuRaise: 0,
         turn: 1,
-        cuPlayed
+        cuPlayed,
+        cuPlay: 'RAISE'
       }))
+      setTimeout(() => {this.restartPlays()}, 1500)
       console.log(`CU: RAISE ${raise} `);
     } else console.log('nie działa');
   } else console.log('NIE TWOJA TURA');
@@ -2291,7 +2340,7 @@ cuFOLD = () => {
   let tableHand = this.state.tableHand
   if (this.state.turn == 2) {
   console.log('CU: FOLD');
-  alert('Player WINS!')
+  setTimeout(() => {alert('Player WINS!')}, 1000)
   playerHand.forEach(hand => {cards.push(hand)})
   AIHand.forEach(hand => {
     hand.active = true
@@ -2302,7 +2351,9 @@ cuFOLD = () => {
       cards,
       playerMoney: prevState.playerMoney + prevState.allBID + prevState.playerBID + prevState.cuBID,
       cuMoney: prevState.cuMoney,
+      cuPlay: 'FOLD'
     }))
+    setTimeout(() => {this.restartPlays()}, 1500)
   this.restart()
   setTimeout(() => {this.play()}, 2000)
 } else console.log('NIE TWOJA TURA');
@@ -2311,18 +2362,12 @@ cuFOLD = () => {
   render() { 
     return ( 
     <div className="game_area">
-      <button onClick={this.getPlayersCards}>SPRAWDŹ</button>
-      <button onClick={this.getTableCards}>SPRAWDŹ2</button>
-      <button onClick={this.getAICards}>SPRAWDŹ3</button>
-      <button onClick={this.checkOptions}>SPRAWDŹ4</button>
-      <button onClick={this.checkState}>SPRAWDŹ5</button> 
-      <button onClick={this.play}>PLAY</button> 
-      <button onClick={this.cuPlay}>CUPLAY</button> 
-      <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange}/>
+      <button className="game_area_playButton" onClick={this.play}>PLAY</button>
+      <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange} play={this.state.play}/>
 
-      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} highPCard2={this.state.highPCard2} highCCard2={this.state.highCCard2} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin}/>
+      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} highPCard2={this.state.highPCard2} highCCard2={this.state.highCCard2} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin} playerPlay={this.state.playerPlay} cuPlay={this.state.cuPlay} play={this.state.play}/>
 
-      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} fold={this.playerFOLD} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange}/>
+      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} fold={this.playerFOLD} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange} play={this.state.play}/>
     </div>
    );
   }

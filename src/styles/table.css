@@ -1,7 +1,9 @@
 .table {
     position: absolute;
-    width: 60%;
-    height: 40%;
+    width: 690px;
+    /* width: 60%; */
+    /* height: 40%; */
+    height: 300px;
     background-color: darkgreen;
     top: 50%;
     left: 50%;
@@ -12,45 +14,103 @@
 .table-cards-first {
     position: absolute;
     top: 50%;
-    left: 15%;
+    left: 23%;
     transform: translateY(-50%);
     width: 80px;
-    height: 80px;
+    height: 100px;
     border-radius: 7%;
   }
   .table-cards-second {
     position: absolute;
     top: 50%;
-    left: 27%;
+    left: 35%;
     transform: translateY(-50%);
     width: 80px;
-    height: 80px;
+    height: 100px;
     border-radius: 7%;
   }
   .table-cards-third {
     position: absolute;
     top: 50%;
-    left: 39%;
+    left: 47%;
     transform: translateY(-50%);
     width: 80px;
-    height: 80px;
+    height: 100px;
     border-radius: 7%;
   }
   .table-cards-fourth {
     position: absolute;
     top: 50%;
-    left: 51%;
+    left: 59%;
     transform: translateY(-50%);
     width: 80px;
-    height: 80px;
+    height: 100px;
     border-radius: 7%;
   }
   .table-cards-fifth {
     position: absolute;
     top: 50%;
-    left: 63%;
+    left: 71%;
     transform: translateY(-50%);
     width: 80px;
-    height: 80px;
+    height: 100px;
     border-radius: 7%;
+  }
+
+  .table-cards-all {
+    position: absolute;
+    top: 50%;
+    left: 85%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 100px;
+    border-radius: 7%;
+  }
+
+  .cuBID {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .playerBID {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .allBID {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .playerPlay {
+    position: absolute;
+    top: 90%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 20px;
+    font-style: italic;
+    color: cadetblue;
+    /* text-shadow: 0 0 2px; */
+  }
+
+  .cuPlay {
+    position: absolute;
+    top: 10%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 20px;
+    font-style: italic;
+    color: rgb(38, 62, 63);
+    /* text-shadow: 0 0 2px; */
   }

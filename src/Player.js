@@ -15,19 +15,21 @@ const Player = (props) => {
         else if (props.options.hightCard) return 'highCard'
     }
     return (
-        <div className='player'>
+            <div className={props.play ? 'player' : null}>
             <div className='player-cards'>
+            {props.play ? <h3>Your chips: {props.money}</h3> : null}
+            {/* <h3>Twoja ręka: {options()}</h3> */}
+            {props.cards.length == 2 ? <h3>Your hand: {options()}</h3> : null}
             {props.cards.length == 2 ? <img className='player-cards-first' src={props.cards[0].img} alt="player" /> : null}
             {props.cards.length == 2 ? <img className='player-cards-second' src={props.cards[1].img} alt="player" /> : null}
-            <h4>Twoja ręka: {options()}</h4>
-            <h4>Twoje żetony: {props.money}</h4>
-            <button onClick={props.check}>CHECK</button>
-            <button onClick={props.call}>CALL</button>
-            <h4>twój raise: {props.playerRaiseValue}</h4>
-            <input type='number' name='player' value={props.playerRaiseValue} onChange={props.handleRChange} />
-            <button onClick={props.raise}>RAISE</button>
-            <button onClick={props.allin}>ALL IN</button>
-            <button onClick={props.fold}>FOLD</button>
+            </div>
+            <div className='player-options'>
+            {props.play ? <button onClick={props.check}>CHECK</button> : null}
+            {props.play ? <button onClick={props.call}>CALL</button> : null}
+            {props.play ? <input type='number' name='player' value={props.playerRaiseValue} onChange={props.handleRChange} /> : null}
+            {props.play ? <button onClick={props.raise}>RAISE</button> : null}
+            {props.play ? <button onClick={props.allin}>ALL IN</button> : null}
+            {props.play ? <button onClick={props.fold}>FOLD</button> : null}
             </div>
         </div>
     )

@@ -1,16 +1,51 @@
 .player {
     position: absolute;
-    width: 20%;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    text-align: center;
+    /* width: 50%; */
     height: 30%;
-    background-color: white;
+    background-color: rgb(94, 102, 110);
     top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid red;
+    border: 2px solid darkslategrey;
+    border-radius: 5%;
+  }
+
+  .player-cards {
+    /* padding-left: 10%; */
+    width: 60%;
+    height: 100%;
+    /* background-color: slategray; */
+  }
+
+  .player-options {
+    
+    width: 40%;
+    height: 100%;
+    /* background-color: blue */
+  }
+
+  .player-options button {
+    margin: 10px 5px;
+    height: 20%;
+    width: 40%;
+    border-radius: 10%;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .player-options input {
+    margin: 5px;
+    height: 10%;
+    width: 40%;
   }
   
   .player-cards img {
+    margin-top: 10px;
     width: 100px;
-    height: 100px;
+    height: 110px;
     border-radius: 7%;
   }
