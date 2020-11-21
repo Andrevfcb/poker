@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/poker/static/css/main.4ac317ce.chunk.css",
-    "main.js": "/poker/static/js/main.15676e6f.chunk.js",
-    "main.js.map": "/poker/static/js/main.15676e6f.chunk.js.map",
+    "main.js": "/poker/static/js/main.e4b21cdd.chunk.js",
+    "main.js.map": "/poker/static/js/main.e4b21cdd.chunk.js.map",
     "runtime-main.js": "/poker/static/js/runtime-main.73f42990.js",
     "runtime-main.js.map": "/poker/static/js/runtime-main.73f42990.js.map",
     "static/js/2.872b79df.chunk.js": "/poker/static/js/2.872b79df.chunk.js",
     "static/js/2.872b79df.chunk.js.map": "/poker/static/js/2.872b79df.chunk.js.map",
     "index.html": "/poker/index.html",
-    "precache-manifest.21867d4d35836ef83ffcd51def69aded.js": "/poker/precache-manifest.21867d4d35836ef83ffcd51def69aded.js",
+    "precache-manifest.1b501258cced773144e50a8fc74320b8.js": "/poker/precache-manifest.1b501258cced773144e50a8fc74320b8.js",
     "service-worker.js": "/poker/service-worker.js",
     "static/css/main.4ac317ce.chunk.css.map": "/poker/static/css/main.4ac317ce.chunk.css.map",
     "static/js/2.872b79df.chunk.js.LICENSE.txt": "/poker/static/js/2.872b79df.chunk.js.LICENSE.txt",
@@ -70,6 +70,6 @@
     "static/js/runtime-main.73f42990.js",
     "static/js/2.872b79df.chunk.js",
     "static/css/main.4ac317ce.chunk.css",
-    "static/js/main.15676e6f.chunk.js"
+    "static/js/main.e4b21cdd.chunk.js"
   ]
 }
