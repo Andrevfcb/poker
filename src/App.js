@@ -210,7 +210,7 @@ class App extends Component {
     cuPlayed: false,
     // turn: 1,
     part: 0,
-    round: prevState.round++,
+    round: prevState.round + 1,
     allInPlayed: false,
     playerOptions:
     {
@@ -266,7 +266,7 @@ class App extends Component {
     this.getPlayersCards()
     this.getAICards();
     // console.log(e.target.style.display);
-    if (this.state.round == 1) {
+    if (!this.state.play) {
       this.setState({play: true})
     e.target.style.display = 'none'}
     
@@ -409,7 +409,7 @@ class App extends Component {
         playerPlayed: false,
         cuPlayed: false,
         // turn: 1,
-        part: prevState.part++
+        part: prevState.part + 1
       }))
       if (this.state.round % 2) {
         this.setState({
