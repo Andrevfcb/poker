@@ -182,14 +182,6 @@ class App extends Component {
     play: false
   }
 
-
-  // componentDidUpdate(prevState) {
-  //   // Typowy sposób użycia (nie zapomnij porównać właściwości):
-  //   if (this.state.playerOptions !== prevState.playerOptions) {
-  //     this.checkIfPair()}
-  // }
-  
-
   compareNumbers(a, b) {
     return a - b
   }
@@ -208,7 +200,6 @@ class App extends Component {
     allBID: 0,
     playerPlayed: false,
     cuPlayed: false,
-    // turn: 1,
     part: 0,
     round: prevState.round + 1,
     allInPlayed: false,
@@ -262,21 +253,17 @@ class App extends Component {
   play = (e) => {
     if (this.checkIfLost()) return alert("YOU LOST :(")
     else if (this.checkIfWin()) return alert("YOU WON!")
-    // if (this.state.playerHand.length !== 2 && this.state.AIHand.length !== 2) {
     this.getPlayersCards()
     this.getAICards();
-    // console.log(e.target.style.display);
     if (!this.state.play) {
       this.setState({play: true})
     e.target.style.display = 'none'}
     
     setTimeout(() => {this.checkOptions()}, 1000)
-    // this.checkOptions()
     this.getBlinds()
     if (!(this.state.round % 2)) {
       setTimeout(() => {this.cuPlay()}, 2000)
     }
-  // }
 }
 
   getBlinds = () => {
@@ -389,9 +376,7 @@ class App extends Component {
 
   getToNext = () => {
     let AIHand = this.state.AIHand
-    // this.getTableCards()
     if (this.state.part == 3) {
-      
       AIHand.forEach(hand => {
         hand.active = true
       })
@@ -408,7 +393,6 @@ class App extends Component {
         allBID: prevState.allBID + prevState.playerBID + prevState.cuBID,
         playerPlayed: false,
         cuPlayed: false,
-        // turn: 1,
         part: prevState.part + 1
       }))
       if (this.state.round % 2) {
@@ -433,10 +417,6 @@ class App extends Component {
         setTimeout(() => {this.playerCHECK()}, 2000)
       }
     }}
-    // if (this.state.playerMoney == 0 || this.state.cuMoney == 0) {
-    //   setTimeout(() => {this.playerCHECK()}, 1000)
-    //   setTimeout(() => {this.cuCHECK()}, 2000)
-    // }
   }
 
   cuPlay = () => {
@@ -456,9 +436,7 @@ class App extends Component {
     else if (this.state.CUOptions.twoPairs) {cOption = 3}
     else if (this.state.CUOptions.onePair) {cOption = 2}
     else if (this.state.CUOptions.hightCard) {cOption = 1}
-    // console.log(cuMoney);
-    // console.log(`cu: ${cuBID}`);
-    // console.log(`player: ${playerBID}`);
+
     const oneOfTwoBID = Math.floor(cuMoney/2)
     const oneOfThreeBID = Math.floor(cuMoney/3)
     const oneOfFourBID = Math.floor(cuMoney/4)
@@ -468,20 +446,6 @@ class App extends Component {
     const oneOfEightBID = Math.floor(cuMoney/8)
     const oneOfNineBID = Math.floor(cuMoney/9)
     const oneOfTenBID = Math.floor(cuMoney/10)
-
-    // console.log(oneOfTwoBID);
-    // console.log(oneOfThreeBID);
-    // console.log(oneOfFourBID);
-    // console.log(oneOfFiveBID);
-    // console.log(oneOfSixBID);
-    // console.log(oneOfSevenBID);
-    // console.log(oneOfEightBID);
-    // console.log(oneOfNineBID);
-    // console.log(oneOfTenBID);
-    console.log(cuBID);
-    console.log(playerBID);
-    console.log(cuMoney);
-    console.log(cOption);
     
     if (cuMoney <= 50) {
       if (part == 0) {
@@ -2032,8 +1996,6 @@ class App extends Component {
     }))
     
     console.log('Gracz: CHECK');
-    console.log(playerPlayed);
-    console.log(cuPlayed);
     if (this.state.allInPlayed) {
     this.restartPlays()
     } else {setTimeout(() => {this.restartPlays()}, 1500)}
@@ -2209,8 +2171,6 @@ class App extends Component {
       this.restartPlays()
       } else {setTimeout(() => {this.restartPlays()}, 1500)}
     console.log('CU: CHECK');
-    console.log(playerPlayed);
-    console.log(cuPlayed);
     if (playerPlayed && cuPlayed) {
       this.getToNext()
       // setTimeout(() => {this.getToNext()}, 2000)
@@ -2239,8 +2199,6 @@ class App extends Component {
         }))
         setTimeout(() => {this.restartPlays()}, 1500)
         console.log('CU: CALL');
-        console.log(playerPlayed);
-        console.log(cuPlayed);
         if (playerPlayed && cuPlayed) {
           // setTimeout(() => {this.getToNext()}, 2000)
           this.getToNext()
@@ -2365,9 +2323,9 @@ cuFOLD = () => {
       <button className="game_area_playButton" onClick={this.play}>PLAY</button>
       <CU cards={this.state.AIHand} options={this.state.CUOptions} money={this.state.cuMoney} check={this.cuCHECK} call={this.cuCALL} allin={this.cuALLIN} raise={this.cuRAISE} fold={this.cuFOLD} cuRaiseValue={this.state.cuRaise} handleRChange={this.handleRChange} play={this.state.play}/>
 
-      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} highPCard2={this.state.highPCard2} highCCard2={this.state.highCCard2} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin} playerPlay={this.state.playerPlay} cuPlay={this.state.cuPlay} play={this.state.play}/>
+      <Table cards={this.state.tableHand} pOptions={this.state.playerOptions} cOptions={this.state.CUOptions} highPCard={this.state.highPCard} highCCard={this.state.highCCard} highPCard2={this.state.highPCard2} highCCard2={this.state.highCCard2} playerBID={this.state.playerBID} cuBID={this.state.cuBID} allBID={this.state.allBID} playerRaiseValue={this.state.playerRaise} whoWin={this.state.whoWin} playerPlay={this.state.playerPlay} cuPlay={this.state.cuPlay} play={this.state.play} turn={this.state.turn} allInPlayed={this.state.allInPlayed}/>
 
-      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} fold={this.playerFOLD} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange} play={this.state.play}/>
+      <Player cards={this.state.playerHand} options={this.state.playerOptions} money={this.state.playerMoney} check={this.playerCHECK} call={this.playerCALL} allin={this.playerALLIN} raise={this.playerRAISE} fold={this.playerFOLD} playerRaiseValue={this.state.playerRaise} handleRChange={this.handleRChange} play={this.state.play} turn={this.state.turn} allInPlayed={this.state.allInPlayed} />
     </div>
    );
   }

@@ -1,10 +1,8 @@
 .player {
     position: absolute;
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     text-align: center;
-    /* width: 50%; */
     height: 30%;
     background-color: rgb(94, 102, 110);
     top: 85%;
@@ -14,18 +12,19 @@
     border-radius: 5%;
   }
 
+  .player-turn {
+    border: 2px solid white;
+    background-color: rgb(122, 132, 143);
+  }
+
   .player-cards {
-    /* padding-left: 10%; */
     width: 60%;
     height: 100%;
-    /* background-color: slategray; */
   }
 
   .player-options {
-    
     width: 40%;
     height: 100%;
-    /* background-color: blue */
   }
 
   .player-options button {
