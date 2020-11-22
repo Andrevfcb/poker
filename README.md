@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-You can play this game on the link added below 
+You can play this game on the link 
 https://andrevfcb.github.io/poker
 
 ## Available Scripts
